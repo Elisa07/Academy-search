@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="mb-4 mt-4">
+    <h1 class="text-center">AcademySearch</h1>
+    <div class="input-group">
+      <input class="form-control" type="text" name="search" id="search" placeholder="Search" [(ngModel)]="searchText">
+      <button class="btn btn-primary" (click)="searchInput()">Cerca</button>
+      <button class="btn btn-danger" (click)="deleteInput()">X</button>
+    </div>
+  </div>
+  <ng-container class="list-group">
+    <div *ngIf="dataService.results">
+      <ul *ngFor="let r of dataService.results" class="list-group-item">
+        <li><strong>{{r.titolo}}</strong></li>
+        <li>{{r.descrizione}}</li>
+        <li>{{r.url}}</li>
+      </ul>
+      <!-- <ng-template id="notFound">
+          <p>Nessun risultato trovato</p>
+      </ng-template> -->
+    </div>
+  </ng-container>
+</div>

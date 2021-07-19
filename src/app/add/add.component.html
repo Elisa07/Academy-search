@@ -1,0 +1,48 @@
+<form [formGroup]="addForm" (ngSubmit)="onAddSearchItem()">
+  <div class="form-group">
+    <label for="title">Titolo</label>
+    <input
+      id="title"
+      class="form-control"
+      formControlName="title"
+      type="text"
+    >
+  </div>
+  <div class="form-group">
+    <label for="description">Descrizione</label>
+    <textarea
+      id="description"
+      class="form-control"
+      formControlName="description"
+    ></textarea>
+  </div>
+  <div class="form-group">
+    <label for="url">Url</label>
+    <input
+      id="url"
+      class="form-control"
+      formControlName="url"
+    >
+  </div>
+  <div class="form-group">
+    <label>Chiavi</label>
+    <button class="btn btn-primary"  type="button" (click)="addKeyInput()">Aggiungi chiave</button>
+    <div class="form-array" formArrayName="keys">
+      <div *ngFor="let key of controls; let i = index" class="row">
+        <div class="col-10" [formGroupName]="i">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="key"
+          >
+        </div>
+        <div class="col">
+         <button class="btn btn-danger" type="button" (click)="removeKey(i)">X</button>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <button class="btn btn-primary" [disabled]="addForm.invalid" type="submit">Aggiungi</button>
+  </div>
+</form>

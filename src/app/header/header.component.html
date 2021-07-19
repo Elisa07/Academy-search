@@ -1,0 +1,17 @@
+<nav class="navbar navbar-light bg-light justify-content-between">
+  <a routerLink="search" class="navbar-brand"><fa-icon [icon]="searchIcon"></fa-icon></a>
+  <form (ngSubmit)="login()" [formGroup]="loginForm" class="d-flex" *ngIf="!isLogged">
+    <div class="form-group">
+      <input class="form-control" type="text" placeholder="Username">
+    </div>
+    <div class="form-group">
+      <input class="form-control" type="text" placeholder="Password">
+    </div>
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+
+  </form>
+  <div *ngIf="isLogged">
+    <button class="btn btn-primary" (click)="logout()">Logout</button>
+    <a routerLink="admin"><fa-icon [icon]="userIcon" style="font-size: 30px; color: darkolivegreen"></fa-icon></a>
+  </div>
+</nav>
