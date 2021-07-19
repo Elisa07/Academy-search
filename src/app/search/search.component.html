@@ -12,7 +12,7 @@
       <ul *ngFor="let r of dataService.resultsForPagination" class="list-group-item">
         <li><strong>{{r.titolo}}</strong></li>
         <li>{{r.descrizione}}</li>
-        <li><a href="{{r.url}}">{{r.url}}</a></li>
+        <li><a href="{{r.url}}" target="_blank">{{r.url}}</a></li>
       </ul>
       <!-- <ng-template id="notFound">
           <p>Nessun risultato trovato</p>

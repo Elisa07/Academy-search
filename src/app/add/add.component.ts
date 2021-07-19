@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
+import { DataService } from '../data.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-add',
@@ -9,7 +11,10 @@ import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from "@a
 export class AddComponent implements OnInit {
 
   addForm!: FormGroup;
-  constructor() { }
+  postData: any; 
+  constructor(private dataService: DataService, private cookieService: CookieService) { 
+    this.postData = {};
+  }
 
   ngOnInit(): void {
     this.initForm();
@@ -17,6 +22,7 @@ export class AddComponent implements OnInit {
 
   private initForm() {
     this.addForm = new FormGroup({
+      'id': new FormControl(null),
       'title': new FormControl(null, Validators.required),
       'description': new FormControl(null, Validators.required),
       'keys': new FormArray([]),
@@ -38,7 +44,22 @@ export class AddComponent implements OnInit {
   }
 
   onAddSearchItem(): void {
+    var postData = {
+      "titolo" : "",
+      "descrizione" : "",
+      "chiavi" : [],
+      "url" : ""
+    }
+    postData.titolo = (<HTMLInputElement>document.getElementById("title")).value;
+    postData.descrizione = (<HTMLInputElement>document.getElementById("description")).value;
+    postData.url = (<HTMLInputElement>document.getElementById("url")).value;
+    var zio_bebbe = this.cookieService.get("userInfo");
+    
+    //token = prendere da zio_bebbe
+
+
     // Chiamare il server tramite il service
+    // this.dataService.addPost(postData, token);
 
     this.initForm();
   }

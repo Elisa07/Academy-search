@@ -1,9 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+
+export interface Result {
+  id?: number, 
+  titolo: string, 
+  descrizione: string, 
+  chiavi: string, 
+  url: string
+}
 @Injectable({
   providedIn: 'root'
 })
+
 export class DataService {
   public _results: any;
   public _resultsLength: any;
@@ -33,7 +42,15 @@ export class DataService {
     return this.http.get("/ricerca?q=" + chiave);
   }
 
-  callPost() {
-    
+  addPost(postData: { titolo: string; descrizione: string; chiavi: any; url: string; }, token:any) {  
+    this.http.post(
+      "/ricerca/",
+      postData,
+      // {
+      //   'Authorization': `Bearer ${token}`
+      // }
+    ).subscribe(responseData => {
+      console.log(responseData)
+    });
   }
 }

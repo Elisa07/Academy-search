@@ -6,7 +6,7 @@
       <h1>Admin info</h1>
     </div>
     <div class="col-12 col-lg-7">
-      <form [formGroup]="addForm" (ngSubmit)="onAddSearchItem()">
+      <form [formGroup]="addForm" (ngSubmit)="onAddSearchItem()" id="aaaaaaaaaa">
         <div class="form-group">
           <label for="title">Titolo</label>
           <input
@@ -14,6 +14,7 @@
             class="form-control"
             formControlName="title"
             type="text"
+            value = "aaaaaaaa"
           >
         </div>
         <div class="form-group">
@@ -22,6 +23,7 @@
             id="description"
             class="form-control"
             formControlName="description"
+            value = "bbbbbbbbbbb"
           ></textarea>
         </div>
         <div class="form-group">
@@ -30,12 +32,14 @@
             id="url"
             class="form-control"
             formControlName="url"
+            value = "sdhgdg"
+
           >
         </div>
         <div class="form-group">
           <label>Chiavi</label>
           <button class="btn btn-primary"  type="button" (click)="addKeyInput()">Aggiungi chiave</button>
-          <div class="form-array" formArrayName="keys">
+          <div class="form-array caccapuzzapipi" formArrayName="keys">
             <div *ngFor="let key of controls; let i = index" class="row">
               <div class="col-10" [formGroupName]="i">
                 <input
@@ -51,7 +55,7 @@
           </div>
         </div>
         <div>
-          <button class="btn btn-primary" [disabled]="addForm.invalid" type="submit">Aggiungi</button>
+          <button class="btn btn-primary" type="submit">Aggiungi</button>
         </div>
       </form>
     </div>

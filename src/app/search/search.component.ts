@@ -23,6 +23,7 @@ export class SearchComponent implements OnInit {
     this.dataService.setResults(this.searchText).subscribe(
       data => {
         this.dataService.results = data;
+        console.log(data);
         this.dataService.setResultsLength(Object.keys(data).length);
         this.dataService.setResultsForPage(1);
       },
