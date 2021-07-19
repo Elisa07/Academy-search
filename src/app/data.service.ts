@@ -5,7 +5,9 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class DataService {
-  private _results: any;
+  public _results: any;
+  public _resultsLength: any;
+  public resultsForPagination: any;
 
   get results(): any{
     return this._results;
@@ -13,10 +15,25 @@ export class DataService {
   set results(value: any) {
     this._results = value;
   }
+  
+  get resultsLength(): any{
+    return this._resultsLength;
+  }
+  setResultsLength(value: any) {
+    this._resultsLength = value;
+  }
+
+  setResultsForPage(page:any) {
+    this.resultsForPagination = this._results.slice(page*10 - 10, page*10)
+  }
 
   constructor(private http: HttpClient) {}
 
   setResults(chiave: string) {
     return this.http.get("/ricerca?q=" + chiave);
+  }
+
+  callPost() {
+    
   }
 }

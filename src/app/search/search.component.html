@@ -3,20 +3,21 @@
     <h1 class="text-center">AcademySearch</h1>
     <div class="input-group">
       <input class="form-control" type="text" name="search" id="search" placeholder="Search" [(ngModel)]="searchText">
-      <button class="btn btn-primary" (click)="searchInput()">Cerca</button>
+      <button class="btn btn-primary" (click)="searchInput()"><fa-icon [icon]="searchIcon"></fa-icon></button>
       <button class="btn btn-danger" (click)="deleteInput()">X</button>
     </div>
   </div>
   <ng-container class="list-group">
     <div *ngIf="dataService.results">
-      <ul *ngFor="let r of dataService.results" class="list-group-item">
+      <ul *ngFor="let r of dataService.resultsForPagination" class="list-group-item">
         <li><strong>{{r.titolo}}</strong></li>
         <li>{{r.descrizione}}</li>
-        <li>{{r.url}}</li>
+        <li><a href="{{r.url}}">{{r.url}}</a></li>
       </ul>
       <!-- <ng-template id="notFound">
           <p>Nessun risultato trovato</p>
       </ng-template> -->
+      <ngb-pagination [collectionSize]="dataService.resultsLength" [pageSize]="pageSize" [(page)]="page" (pageChange)="dataService.setResultsForPage(page)"></ngb-pagination>
     </div>
   </ng-container>
 </div>
