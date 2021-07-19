@@ -15,12 +15,14 @@ export class HeaderComponent implements OnInit {
   userIcon = faUserCircle;
   searchIcon = faSearch;
 
+  loginError: boolean = false;
+
   constructor(private authService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      'username': new FormControl('user', Validators.required),
-      'password': new FormControl('password', Validators.required)
+      'username': new FormControl(null, Validators.required),
+      'password': new FormControl(null, Validators.required)
     });
     this.isLogged = this.authService.isLogged;
     this.authService.userChanges.subscribe(() => {
@@ -29,11 +31,20 @@ export class HeaderComponent implements OnInit {
   }
 
   login() {
-    this.authService.login(this.loginForm.value.username, this.loginForm.value.password);
+    this.authService.login(this.loginForm.value.username, this.loginForm.value.password)
+      .subscribe((resData) => {
+        this.isLogged = true;
+        this.loginError = false;
+        console.log('login ok');
+      },
+        (error: string) => {
+        this.loginError = true;
+        console.log(error);
+      });
+    this.loginForm.reset();
   }
 
   logout() {
     this.authService.logout();
   }
-
 }

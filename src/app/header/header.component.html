@@ -1,18 +1,22 @@
 <nav class="navbar navbar-light bg-light justify-content-between">
-  <a routerLink="search" class="navbar-brand"><fa-icon [icon]="searchIcon"></fa-icon></a>
-  <form (ngSubmit)="login()" [formGroup]="loginForm" class="d-flex" *ngIf="!isLogged">
-    <div class="form-group">
-      <input class="form-control" type="text" placeholder="Username">
+  <div class="container">
+    <div class="justify-content-sm-between w-100 d-flex">
+      <div class="d-flex align-items-center">
+        <a routerLink="search" class="navbar-brand"><fa-icon [icon]="searchIcon"></fa-icon></a>
+        <h3>AcademySearch</h3>
+      </div>
+      <div>
+        <form (ngSubmit)="login()" [formGroup]="loginForm" class="d-flex align-items-center" *ngIf="!isLogged">
+          <input class="form-control" type="text" placeholder="Username" formControlName="username">
+          <input class="form-control" type="password" placeholder="Password" formControlName="password">
+          <button class="btn btn-outline-success my-2 my-sm-0" [disabled]="loginForm.invalid" type="submit">Login</button>
+        </form>
+        <span class="error" *ngIf="loginError">Username o password errati</span>
+      </div>
+      <div *ngIf="isLogged" class="d-flex align-items-center">
+        <button class="btn btn-primary" (click)="logout()">Logout</button>
+        <a routerLink="admin"><fa-icon [icon]="userIcon" style="font-size: 30px; color: darkolivegreen"></fa-icon></a>
+      </div>
     </div>
-    <div class="form-group">
-      <input class="form-control" type="text" placeholder="Password">
-    </div>
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
-
-  </form>
-  <div *ngIf="isLogged">
-    <button class="btn btn-primary" (click)="logout()">Logout</button>
-    <a routerLink="admin"><fa-icon [icon]="userIcon" style="font-size: 30px; color: darkolivegreen"></fa-icon></a>
   </div>
 </nav>
-<!--Ciao-->
