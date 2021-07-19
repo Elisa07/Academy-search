@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AuthenticationService} from "../services/authentication.service";
+import {faTimes, faTimesCircle} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-add',
@@ -9,7 +11,8 @@ import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from "@a
 export class AddComponent implements OnInit {
 
   addForm!: FormGroup;
-  constructor() { }
+  deleteIcon = faTimesCircle;
+  constructor(private authService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -20,7 +23,7 @@ export class AddComponent implements OnInit {
       'title': new FormControl(null, Validators.required),
       'description': new FormControl(null, Validators.required),
       'keys': new FormArray([]),
-      'url': new FormControl(null, Validators.required)
+      'url': new FormControl(null, [Validators.required, Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')])
     });
   }
 
@@ -28,7 +31,7 @@ export class AddComponent implements OnInit {
     console.log('Add key');
     (<FormArray>this.addForm.get('keys')).push(
       new FormGroup({
-        'key': new FormControl(null)
+        'key': new FormControl(null, Validators.required)
       })
     );
   }
@@ -43,6 +46,9 @@ export class AddComponent implements OnInit {
     this.initForm();
   }
 
+  logout() {
+    this.authService.logout();
+  }
   get controls(): AbstractControl[]{
     return (<FormArray>this.addForm.get('keys')).controls;
   }

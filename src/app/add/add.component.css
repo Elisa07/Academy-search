@@ -1,3 +1,16 @@
-input.ng-invalid.ng-touched {
-  border: 1px solid red;
+input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched {
+  border: 1px solid var(--red);
+}
+
+img.profile {
+  width: 300px;
+  margin: 10px 0;
+}
+
+.form-group {
+  margin: 10px 0;
+}
+
+fa-icon {
+  color: black!important;
 }

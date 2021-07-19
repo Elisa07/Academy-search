@@ -1,4 +1,42 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --lightblue: #006062;
+  --red: #ef5159;
+  --black: #2f2f2f;
+}
+
 fa-icon {
   margin: 5px;
 }
+
+h1, h2, h3, h4, h5, p{
+  color: var(--black);
+}
+
+.btn-outline-danger {
+  color: var(--red);
+  border-color: var(--red);
+}
+
+.btn-outline-danger:hover {
+  background-color: var(--red);
+}
+
+span.error {
+  color: var(--red);
+  font-size: 10px;
+}
+
+.btn-outline-primary {
+  color: var(--lightblue);
+  border-color: var(--lightblue);
+}
+
+button.btn-outline-primary[disabled] {
+  color: var(--lightblue);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--lightblue);
+}
+

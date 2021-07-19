@@ -1,11 +1,16 @@
-
-
 <div class="container">
   <div class="row">
     <div class="col-12 col-lg-5">
-      <h1>Admin info</h1>
+      <h1>User info</h1>
+      <div>
+        <img class="d-block profile" src="../../assets/images/1012770.png" alt="User image">
+        <button class="btn btn-outline-primary" disabled>Cambia password</button>
+        <button class="btn btn-outline-danger" (click)="logout()">Logout</button>
+      </div>
     </div>
     <div class="col-12 col-lg-7">
+      <h4>Aggiungi un nuovo item</h4>
+      <p>Compila il form sottostante per aggiungere un nuovo elemento.</p>
       <form [formGroup]="addForm" (ngSubmit)="onAddSearchItem()">
         <div class="form-group">
           <label for="title">Titolo</label>
@@ -15,6 +20,7 @@
             formControlName="title"
             type="text"
           >
+          <span class="error" *ngIf="addForm.controls['title'].invalid && addForm.controls['title'].touched">Campo obbligatorio</span>
         </div>
         <div class="form-group">
           <label for="description">Descrizione</label>
@@ -23,18 +29,20 @@
             class="form-control"
             formControlName="description"
           ></textarea>
+          <span class="error" *ngIf="addForm.controls['description'].invalid && addForm.controls['description'].touched">Campo obbligatorio</span>
         </div>
         <div class="form-group">
           <label for="url">Url</label>
           <input
             id="url"
+            type="url"
             class="form-control"
             formControlName="url"
           >
+          <span class="error" *ngIf="addForm.controls['url'].invalid && addForm.controls['url'].touched">Campo obbligatorio</span>
         </div>
         <div class="form-group">
           <label>Chiavi</label>
-          <button class="btn btn-primary"  type="button" (click)="addKeyInput()">Aggiungi chiave</button>
           <div class="form-array" formArrayName="keys">
             <div *ngFor="let key of controls; let i = index" class="row">
               <div class="col-10" [formGroupName]="i">
@@ -45,13 +53,14 @@
                 >
               </div>
               <div class="col">
-                <button class="btn btn-danger" type="button" (click)="removeKey(i)">X</button>
+                <button class="btn btn-outline-danger" type="button" (click)="removeKey(i)"><fa-icon [icon]="deleteIcon"></fa-icon></button>
               </div>
             </div>
           </div>
+          <button class="btn btn-outline-primary"  type="button" (click)="addKeyInput()">Aggiungi chiave</button>
         </div>
-        <div>
-          <button class="btn btn-primary" [disabled]="addForm.invalid" type="submit">Aggiungi</button>
+        <div class="w-100 d-flex justify-content-end">
+          <button class="btn btn-outline-primary" [disabled]="addForm.invalid" type="submit">Aggiungi</button>
         </div>
       </form>
     </div>

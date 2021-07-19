@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
   searchIcon = faSearch;
 
   loginError: boolean = false;
+  logginErrorMessage!: string;
 
   constructor(private authService: AuthenticationService) { }
 
@@ -39,7 +40,8 @@ export class HeaderComponent implements OnInit {
       },
         (error: string) => {
         this.loginError = true;
-        console.log(error);
+        this.logginErrorMessage = error;
+        // console.log(error);
       });
     this.loginForm.reset();
   }
