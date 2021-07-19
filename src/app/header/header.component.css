@@ -10,7 +10,12 @@ input.ng-touched.ng-invalid {
   border-color: red;
 }
 
-span.error {
-  color: red;
-  font-size: 10px;
+img.userImage {
+  height: 50px;
+  margin-left: 5px;
+}
+
+nav {
+  border-bottom: 2px solid var(--lightblue) !important;
+  margin-bottom: 10px;
 }

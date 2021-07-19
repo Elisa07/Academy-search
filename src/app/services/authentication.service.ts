@@ -24,6 +24,7 @@ export class AuthenticationService {
   private _tokenTimer: any;
   private _tokenRefreshTimer: any;
 
+
   constructor(private http: HttpClient,
               private router: Router,
               private cookieService: CookieService) {

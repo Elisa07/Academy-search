@@ -7,15 +7,16 @@
       </div>
       <div>
         <form (ngSubmit)="login()" [formGroup]="loginForm" class="d-flex align-items-center" *ngIf="!isLogged">
-          <input class="form-control" type="text" placeholder="Username" formControlName="username">
+          <input class="form-control" type="text" placeholder="User" formControlName="username">
           <input class="form-control" type="password" placeholder="Password" formControlName="password">
           <button class="btn btn-outline-success my-2 my-sm-0" [disabled]="loginForm.invalid" type="submit">Login</button>
         </form>
-        <span class="error" *ngIf="loginError">Username o password errati</span>
+        <span class="error" *ngIf="loginError">{{logginErrorMessage}}</span>
       </div>
       <div *ngIf="isLogged" class="d-flex align-items-center">
-        <button class="btn btn-primary" (click)="logout()">Logout</button>
-        <a routerLink="admin"><fa-icon [icon]="userIcon" style="font-size: 30px; color: darkolivegreen"></fa-icon></a>
+        <button class="btn btn-outline-danger" (click)="logout()">Logout</button>
+        <!-- <a routerLink="admin"><fa-icon [icon]="userIcon" style="font-size: 30px; color: darkolivegreen"></fa-icon></a> -->
+        <a routerLink="admin"><img class="userImage" src="./assets/images/1012770.png"></a>
       </div>
     </div>
   </div>
