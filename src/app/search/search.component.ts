@@ -35,4 +35,8 @@ export class SearchComponent implements OnInit {
     this.searchText = '';
   }
 
+  deleteResearch(id: number) {
+    this.dataService.deleteResearch(id);
+  }
+
 }

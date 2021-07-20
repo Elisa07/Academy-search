@@ -6,7 +6,7 @@ import {CookieService} from "ngx-cookie-service";
 import {catchError, tap} from "rxjs/operators";
 
 interface LoginInfo {
-  accessToken: string,
+  access_token: string,
   tokenExpireIn: number,
   refreshToken: string,
   refreshTokenExpireIn: number
@@ -37,8 +37,11 @@ export class AuthenticationService {
       }
       else { // Token presente e ancora valido
         this.userInfo = getUserInfo;
+        console.log(getUserInfo.access_token)
+
         this.isLogged = true;
         this.refreshToken(this.userInfo.refreshToken); // Chiedo un nuovo token
+        console.log(this.userInfo.access_token);
       }
     }
     else {
@@ -51,6 +54,7 @@ export class AuthenticationService {
     return this.http.post<LoginInfo>('/auth/login', {'user': username, 'password': password})
       .pipe(tap((respData) => {
         this.userInfo = respData;
+        console.log(this.userInfo);
         this.isLogged = true;
         this.cookieService.set('userInfo',  JSON.stringify(this.userInfo));
         this.userChanges.next();
@@ -80,7 +84,8 @@ export class AuthenticationService {
     this.http.post<{access_token: string, tokenExpireIn: number}>('/auth/refreshToken', {refreshToken: refreshToken}, {headers: headers})
       .subscribe((newToken) => {
         if (this.userInfo) {
-          this.userInfo.accessToken = newToken.access_token;
+          this.userInfo.access_token = newToken.access_token;
+          console.log(this.userInfo.access_token);
           this.userInfo.tokenExpireIn = newToken.tokenExpireIn;
           this.setTokenTimer(this.userInfo.tokenExpireIn - Date.now());
         }
