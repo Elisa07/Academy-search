@@ -3,7 +3,12 @@ import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from "@a
 import {AuthenticationService} from "../services/authentication.service";
 import {faCheck, faTimesCircle} from "@fortawesome/free-solid-svg-icons";
 import { CookieService } from 'ngx-cookie-service';
-import { DataService } from '../data.service';
+import {DataService, Result} from '../data.service';
+import {Subject, Subscription} from "rxjs";
+
+interface CheckBox {
+  name: string, value: string, checked: boolean
+}
 
 @Component({
   selector: 'app-add',
@@ -16,13 +21,22 @@ export class AddComponent implements OnInit {
   deleteIcon = faTimesCircle;
   check = faCheck;
   isVisible = false;
+  researches: Result[] = [];
+  checkBox: CheckBox[] = []
+  private checkBoxSub = new Subject<CheckBox[]>();
+  editMode = false;
+
   constructor(private authService: AuthenticationService, private cookieService: CookieService, private dataService: DataService) { }
 
   ngOnInit(): void {
     this.initForm();
+    this.onGetResearches();
   }
 
   private initForm() {
+    this.checkBoxSub.subscribe((checkBoxesValues: CheckBox[]) => {
+      this.checkBox = checkBoxesValues;
+    });
     this.addForm = new FormGroup({
       /*'id': new FormControl(null),*/
       'title': new FormControl(null, Validators.required),
@@ -33,25 +47,13 @@ export class AddComponent implements OnInit {
   }
 
   onAddSearchItem(): void {
-    // var postData = {
-    //   "titolo" : "",
-    //   "descrizione" : "",
-    //   "chiavi" : "",
-    //   "url" : ""
-    // }
-    // postData.titolo = (<HTMLInputElement>document.getElementById("title")).value;
-    // postData.descrizione = (<HTMLInputElement>document.getElementById("description")).value;
-    // postData.chiavi = (<HTMLInputElement>document.getElementById("keys")).value;
-    // postData.url = (<HTMLInputElement>document.getElementById("url")).value;
     const postData = {
       "titolo": this.addForm.value.title,
       "descrizione": this.addForm.value.description,
       "chiavi": this.addForm.value.keys,
       "url": this.addForm.value.url
     }
-    // var token = this.cookieService.get("userInfo");
     this.dataService.addPost(postData);
-
     this.initForm();
     this.success();
 
@@ -61,13 +63,34 @@ export class AddComponent implements OnInit {
     this.isVisible = true;
     setTimeout(() => {
       this.isVisible = false;
-    }, 5000);
+    }, 10000);
   }
 
   logout() {
     this.authService.logout();
   }
-  get controls(): AbstractControl[]{
-    return (<FormArray>this.addForm.get('keys')).controls;
+
+
+  onGetResearches() {
+    this.dataService.getAllResearches().subscribe((researches) => {
+      this.researches = researches;
+      console.log(this.researches);
+      for (let i = 0; i < this.researches.length; i++) {
+        this.checkBox.push({name: String(this.researches[i].id), value: String(this.researches[i].id), checked: false});
+      }
+    })
+  }
+
+  onSelectAll() {
+    for (const c of this.checkBox){
+      c.checked = true;
+    }
+
+    this.checkBoxSub.next(this.checkBox);
+
+  }
+
+  onToggleResearch(index: number) {
+    this.checkBox[index].checked = !this.checkBox[index].checked;
   }
 }

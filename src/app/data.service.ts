@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "./services/authentication.service";
+import {Observable} from "rxjs";
+import {ResultTemplateContext} from "@ng-bootstrap/ng-bootstrap/typeahead/typeahead-window";
 
 
 export interface Result {
@@ -98,5 +100,9 @@ export class DataService {
       console.log('Patch eseguita');
       console.log(respData);
     })
+  }
+
+  getAllResearches(): Observable<Result[]>{
+    return this.http.get<Result[]>('ricerca');
   }
 }

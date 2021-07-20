@@ -1,23 +1,43 @@
 <div class="container">
   <div class="row">
-    <div class="col-12 d-flex justify-content-center">
-      <div id="successAdd" class="mb-2" [style.display]="isVisible ? 'block' : 'none'">
-        <p class="m-4"><fa-icon [icon]="check"></fa-icon>Il tuo sito è stato aggiunto con successo!</p>
-      </div>
-    </div>
+
+  </div>
+  <div>
+    <h1 class="text-center">Admin</h1>
   </div>
   <div class="row">
-    <div class="col-12 col-lg-4">
-      <h1>User info</h1>
+    <div class="col-12 col-lg-6" *ngIf="researches.length !== 0">
       <div>
-        <img class="d-block profile" src="../../assets/images/1012770.png" alt="User image">
-        <button class="btn btn-outline-primary" disabled>Cambia password</button>
-        <button class="btn btn-outline-danger" (click)="logout()">Logout</button>
+        <button *ngIf="!editMode" class="btn btn-outline-primary" (click)="editMode = true;">Modifica la lista delle ricerche</button>
+        <button *ngIf="editMode" class="btn btn-outline-primary" (click)="onSelectAll()">Seleziona tutti</button>
+        <button *ngIf="editMode" class="btn btn-outline-danger" (click)="editMode = false">X</button>
       </div>
+      <ul>
+        <li *ngFor="let r of researches; let i = index">
+          <div class="row">
+            <div *ngIf="editMode" class="col-1 d-flex align-items-center">
+              <input type="checkbox"
+                     [value]="checkBox[i].value"
+              > </div>
+            <div class="col-11">
+              <h4>{{r.titolo}}</h4>
+              <p>{{r.descrizione}}</p>
+            </div>
+          </div>
+
+
+
+        </li>
+      </ul>
     </div>
-    <div class="col-12 col-lg-7">
+    <div class="col-12 col-lg-6">
       <h4>Aggiungi un nuovo item</h4>
       <p>Compila il form sottostante per aggiungere un nuovo elemento.</p>
+      <div class="col-12" *ngIf="isVisible">
+        <div class="alert alert-success">
+          <span><fa-icon [icon]="check"></fa-icon>La ricerca è stata aggiunta con successo!</span>
+        </div>
+      </div>
       <form [formGroup]="addForm" (ngSubmit)="onAddSearchItem()">
         <div class="form-group">
           <label for="title">Titolo</label>
@@ -61,6 +81,7 @@
         <div class="w-100 d-flex justify-content-end">
           <button class="btn btn-outline-primary mb-5" [disabled]="addForm.invalid" type="submit">Aggiungi</button>
         </div>
+
       </form>
     </div>
   </div>
