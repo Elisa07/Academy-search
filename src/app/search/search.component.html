@@ -21,8 +21,10 @@
             <li><strong>{{r.titolo}}</strong></li>
             <li>{{r.descrizione}}</li>
             <li><a href="{{r.url}}" target="_blank">{{r.url}}</a></li>
-            <button class="btn btn-outline-primary mt-2" routerLink="{{r.id}}">Modifica</button>
-            <button class="btn btn-outline-danger ms-3 mt-2" (click)="deleteResearch(r.id)">Elimina</button>
+            <div *ngIf="authService.isLogged">
+              <button class="btn btn-outline-primary mt-2" routerLink="{{r.id}}">Modifica</button>
+              <button class="btn btn-outline-danger ms-3 mt-2" (click)="deleteResearch(r.id)">Elimina</button>
+            </div>
           </ul>
           <ngb-pagination class="d-flex justify-content-center"
           [collectionSize]="dataService.resultsLength"

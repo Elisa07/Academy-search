@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { faSearch, faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import {AuthenticationService} from "../services/authentication.service";
 
 @Component({
   selector: 'app-search',
@@ -14,7 +15,7 @@ export class SearchComponent implements OnInit {
   page = 1;
   pageSize = 10;
 
-  constructor(public dataService: DataService) {
+  constructor(public dataService: DataService, public authService: AuthenticationService) {
     this.searchText = "";
   }
 
