@@ -10,13 +10,13 @@ import {SearchModule} from "./search/search.module";
 import {AddModule} from "./add/add.module";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SearchEditComponent } from './search-edit/search-edit.component';
+import {SearchEditModule} from "./search-edit/search-edit.module";
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     NotFoundComponent,
-    SearchEditComponent
   ],
 
   imports: [
@@ -26,6 +26,7 @@ import { SearchEditComponent } from './search-edit/search-edit.component';
     FormsModule,
     SearchModule,
     AddModule,
+    SearchEditModule,
     ReactiveFormsModule,
     FontAwesomeModule
   ],

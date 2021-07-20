@@ -36,7 +36,6 @@ export class HeaderComponent implements OnInit {
       .subscribe((resData) => {
         this.isLogged = true;
         this.loginError = false;
-        console.log('login ok');
       },
         (error: string) => {
         this.loginError = true;

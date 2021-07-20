@@ -42,13 +42,21 @@ export class DataService {
   constructor(private http: HttpClient, private router:Router, private authService: AuthenticationService) {}
 
   setResults(chiave: string) {
-    return this.http.get("/ricerca?q=" + chiave);
+    return this.http.get("/ricerca?q=" + chiave).subscribe(
+      data => {
+        this.results = data;
+        console.log(data);
+        this.setResultsLength(Object.keys(data).length);
+        this.setResultsForPage(1);
+      },
+      error => { console.log("Errore" + error.message)},
+    );
   }
 
-  addPost(postData: { titolo: string; descrizione: string; chiavi: any; url: string; }) { 
+  addPost(postData: { titolo: string, descrizione: string, chiavi: string, url: string }) {
     const headers = new HttpHeaders ({
       'Authorization': 'Bearer ' + this.authService.userInfo?.access_token
-    }) 
+    })
     return this.http.post(
       "/ricerca",
       postData,
@@ -58,8 +66,18 @@ export class DataService {
     });
   }
 
-
   // Elisa modifiche
+  getSearch(id: number): Result | undefined {
+    for (let s of this._results) {
+      console.log(s.id === id);
+      console.log(id);
+      if (s.id === id){
+        console.log(s.id);
+        return s;
+      }
+    }
+    return undefined;
+  }
   deleteResearch(id: number) {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.authService.userInfo?.access_token
@@ -71,7 +89,13 @@ export class DataService {
     });
   }
 
-  editResearch() {
-
+  setResearch(id: number, research: {titolo: string, descrizione: string, chiavi: string, url: string}) {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.authService.userInfo?.access_token
+    });
+    this.http.patch('ricerca/' + id, research, {headers: headers}).subscribe((respData) => {
+      console.log('Patch eseguita');
+      console.log(respData);
+    })
   }
 }

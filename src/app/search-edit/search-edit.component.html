@@ -1,1 +1,53 @@
-<p>search-edit works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h2>Modifica la ricerca</h2>
+      <p>Modifica i campi sottostanti per modificare la ricerca</p>
+      <form [formGroup]="editForm" (ngSubmit)="onEditSearchItem()">
+        <div class="form-group">
+          <label for="title">Titolo</label>
+          <input
+            id="title"
+            class="form-control"
+            formControlName="title"
+            type="text"
+          >
+          <span class="error" *ngIf="editForm.controls['title'].invalid && editForm.controls['title'].touched">Campo obbligatorio</span>
+        </div>
+        <div class="form-group">
+          <label for="description">Descrizione</label>
+          <textarea
+            id="description"
+            class="form-control"
+            formControlName="description"
+          ></textarea>
+          <span class="error" *ngIf="editForm.controls['description'].invalid && editForm.controls['description'].touched">Campo obbligatorio</span>
+        </div>
+        <div class="form-group">
+          <label for="url">Url</label>
+          <input
+            id="url"
+            type="url"
+            class="form-control"
+            formControlName="url"
+          >
+          <span class="error" *ngIf="editForm.controls['url'].invalid && editForm.controls['url'].touched">Campo obbligatorio</span>
+        </div>
+        <div class="form-group">
+          <label for="keys">Chiavi</label>
+          <input
+            id="keys"
+            type="keys"
+            class="form-control"
+            formControlName="keys"
+          >
+          <span class="error" *ngIf="editForm.controls['keys'].invalid && editForm.controls['keys'].touched">Campo obbligatorio</span>
+        </div>
+
+        <div class="w-100 d-flex justify-content-end">
+          <button class="btn btn-outline-primary mb-5" [disabled]="editForm.invalid" type="submit">Salva</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -21,15 +21,7 @@ export class SearchComponent implements OnInit {
   ngOnInit() : void {}
 
   searchInput() {
-    this.dataService.setResults(this.searchText).subscribe(
-      data => {
-        this.dataService.results = data;
-        console.log(data);
-        this.dataService.setResultsLength(Object.keys(data).length);
-        this.dataService.setResultsForPage(1);
-      },
-      error => { console.log("Errore" + error.message)},
-    )
+    this.dataService.setResults(this.searchText);
   }
 
   deleteInput() {
@@ -38,6 +30,7 @@ export class SearchComponent implements OnInit {
 
   deleteResearch(id: number) {
     this.dataService.deleteResearch(id);
+    this.searchInput();
   }
 
 }

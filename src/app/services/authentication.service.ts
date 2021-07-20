@@ -37,11 +37,8 @@ export class AuthenticationService {
       }
       else { // Token presente e ancora valido
         this.userInfo = getUserInfo;
-        console.log(getUserInfo.access_token)
-
         this.isLogged = true;
         this.refreshToken(this.userInfo.refreshToken); // Chiedo un nuovo token
-        console.log(this.userInfo.access_token);
       }
     }
     else {
@@ -54,7 +51,6 @@ export class AuthenticationService {
     return this.http.post<LoginInfo>('/auth/login', {'user': username, 'password': password})
       .pipe(tap((respData) => {
         this.userInfo = respData;
-        console.log(this.userInfo);
         this.isLogged = true;
         this.cookieService.set('userInfo',  JSON.stringify(this.userInfo));
         this.userChanges.next();
@@ -85,7 +81,6 @@ export class AuthenticationService {
       .subscribe((newToken) => {
         if (this.userInfo) {
           this.userInfo.access_token = newToken.access_token;
-          console.log(this.userInfo.access_token);
           this.userInfo.tokenExpireIn = newToken.tokenExpireIn;
           this.setTokenTimer(this.userInfo.tokenExpireIn - Date.now());
         }

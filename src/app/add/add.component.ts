@@ -22,7 +22,7 @@ export class AddComponent implements OnInit {
 
   private initForm() {
     this.addForm = new FormGroup({
-      'id': new FormControl(null),
+      /*'id': new FormControl(null),*/
       'title': new FormControl(null, Validators.required),
       'description': new FormControl(null, Validators.required),
       'keys': new FormControl(null, Validators.required),
@@ -44,17 +44,23 @@ export class AddComponent implements OnInit {
   // }
 
   onAddSearchItem(): void {
-    var postData = {
-      "titolo" : "",
-      "descrizione" : "",
-      "chiavi" : "",
-      "url" : ""
+    // var postData = {
+    //   "titolo" : "",
+    //   "descrizione" : "",
+    //   "chiavi" : "",
+    //   "url" : ""
+    // }
+    // postData.titolo = (<HTMLInputElement>document.getElementById("title")).value;
+    // postData.descrizione = (<HTMLInputElement>document.getElementById("description")).value;
+    // postData.chiavi = (<HTMLInputElement>document.getElementById("keys")).value;
+    // postData.url = (<HTMLInputElement>document.getElementById("url")).value;
+    const postData = {
+      "titolo": this.addForm.value.title,
+      "descrizione": this.addForm.value.description,
+      "chiavi": this.addForm.value.keys,
+      "url": this.addForm.value.url
     }
-    postData.titolo = (<HTMLInputElement>document.getElementById("title")).value;
-    postData.descrizione = (<HTMLInputElement>document.getElementById("description")).value;
-    postData.chiavi = (<HTMLInputElement>document.getElementById("keys")).value;
-    postData.url = (<HTMLInputElement>document.getElementById("url")).value;
-    var token = this.cookieService.get("userInfo");
+    // var token = this.cookieService.get("userInfo");
     this.dataService.addPost(postData);
 
     this.initForm();

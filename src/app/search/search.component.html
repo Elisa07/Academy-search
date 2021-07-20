@@ -13,13 +13,13 @@
         <li><strong>{{r.titolo}}</strong></li>
         <li>{{r.descrizione}}</li>
         <li><a href="{{r.url}}" target="_blank">{{r.url}}</a></li>
-        <button class="btn btn-outline-primary">Modifica</button>
+        <button class="btn btn-outline-primary" routerLink="{{r.id}}" >Modifica</button>
         <button class="btn btn-outline-danger" (click)="deleteResearch(r.id)">Elimina</button>
       </ul>
       <ngb-pagination class="d-flex justify-content-center"
-      [collectionSize]="dataService.resultsLength" 
-      [pageSize]="pageSize" 
-      [(page)]="page" 
+      [collectionSize]="dataService.resultsLength"
+      [pageSize]="pageSize"
+      [(page)]="page"
       (pageChange)="dataService.setResultsForPage(page)"></ngb-pagination>
     </div>
   </ng-container>
