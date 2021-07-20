@@ -3,7 +3,7 @@ input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched {
 }
 
 img.profile {
-  width: 300px;
+  width: 200px;
   margin: 10px 0;
 }
 
@@ -11,6 +11,12 @@ img.profile {
   margin: 10px 0;
 }
 
-fa-icon {
-  color: black!important;
+#successAdd {
+  border: 1px dotted green;
+  background-color: rgba(135, 206, 135, 0.849);
+  color: green;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
 }

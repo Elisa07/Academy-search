@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../services/authentication.service";
-import {faTimes, faTimesCircle} from "@fortawesome/free-solid-svg-icons";
+import {faCheck, faTimesCircle} from "@fortawesome/free-solid-svg-icons";
 import { CookieService } from 'ngx-cookie-service';
 import { DataService } from '../data.service';
 
@@ -14,6 +14,8 @@ export class AddComponent implements OnInit {
 
   addForm!: FormGroup;
   deleteIcon = faTimesCircle;
+  check = faCheck;
+  isVisible = false;
   constructor(private authService: AuthenticationService, private cookieService: CookieService, private dataService: DataService) { }
 
   ngOnInit(): void {
@@ -30,19 +32,6 @@ export class AddComponent implements OnInit {
     });
   }
 
-  // addKeyInput(): void {
-  //   console.log('Add key');
-  //   (<FormArray>this.addForm.get('keys')).push(
-  //     new FormGroup({
-  //       'key': new FormControl(null, Validators.required)
-  //     })
-  //   );
-  // }
-
-  // removeKey(i: number): void {
-  //   (<FormArray>this.addForm.get('keys')).removeAt(i);
-  // }
-
   onAddSearchItem(): void {
     var postData = {
       "titolo" : "",
@@ -58,6 +47,15 @@ export class AddComponent implements OnInit {
     this.dataService.addPost(postData);
 
     this.initForm();
+    this.success();
+
+  }
+
+  success(): void {
+    this.isVisible = true;
+    setTimeout(() => {
+      this.isVisible = false;
+    }, 5000);
   }
 
   logout() {
