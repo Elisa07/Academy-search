@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
 import {DataService} from "../data.service";
 import {Result} from "../data.service";
 
@@ -13,22 +13,31 @@ export class SearchEditComponent implements OnInit {
 
   editForm!: FormGroup;
   id!:number;
-  constructor(private dataService: DataService, private route: ActivatedRoute) { }
+  constructor(private dataService: DataService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.id = +this.route.snapshot.params['id'];
     this.route.params.subscribe(params => {
       this.id = +params['id'];
     });
-    this.initForm(this.id);
+    this.editForm = new FormGroup({
+      'title': new FormControl(null, Validators.required),
+      'description': new FormControl(null, Validators.required),
+      'keys': new FormControl(null, Validators.required),
+      'url': new FormControl(null, [Validators.required, Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')])
+    });
+    if (this.dataService._results)
+      this.initForm(this.id);
+    else
+      this.router.navigate(['search']);
   }
 
   private initForm(id: number) {
     console.log('Init form');
     const search: Result | undefined = this.dataService.getSearch(+id);
     if (search) {
+      console.log('Search');
       this.editForm = new FormGroup({
-        'id': new FormControl(this.dataService.results),
         'title': new FormControl(search.titolo, Validators.required),
         'description': new FormControl(search.descrizione, Validators.required),
         'keys': new FormControl(search.chiavi, Validators.required),
@@ -36,13 +45,7 @@ export class SearchEditComponent implements OnInit {
       });
     }
     else {
-      this.editForm = new FormGroup({
-        /*'id': new FormControl(this.dataService.results),*/
-        'title': new FormControl(null, Validators.required),
-        'description': new FormControl(null, Validators.required),
-        'keys': new FormControl(null, Validators.required),
-        'url': new FormControl(null, [Validators.required, Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')])
-      });
+      this.router.navigate(['search']);
       }
   }
 
