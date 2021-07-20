@@ -80,7 +80,7 @@ server.post('/auth/refreshToken', (req, res) => {
 	if(refreshToken && (refreshToken in tokenList)) {
 	    const resultOfVerification = verifyRefreshToken(refreshToken);
 		if (!resultOfVerification) {
-			const token = createRefreshToken(tokenList[refreshToken]);
+			const token = createToken(tokenList[refreshToken]);
 			const dateToken = Date.now() + 60000*5;
 			const response = {
 				access_token: token,
@@ -115,7 +115,7 @@ server.post('/auth/verifyToken', (req, res) => {
 })
 
 server.use(/^(?!\/auth).*$/,  (req, res, next) => {
-	if (req.method === 'POST') {
+	if (req.method !== 'GET') {
     if (req.headers.authorization === undefined || req.headers.authorization.split(' ')[0] !== 'Bearer') {
       const status = 401;
       const message = 'header non corretto';

@@ -9,10 +9,12 @@
   </div>
   <ng-container class="list-group">
     <div *ngIf="dataService.results">
-      <ul *ngFor="let r of dataService.resultsForPagination" class="list-group-item border shadow p-3 mb-3 bg-body rounded">
+      <ul *ngFor="let r of dataService.resultsForPagination;" class="list-group-item">
         <li><strong>{{r.titolo}}</strong></li>
         <li>{{r.descrizione}}</li>
         <li><a href="{{r.url}}" target="_blank">{{r.url}}</a></li>
+        <button class="btn btn-outline-primary">Modifica</button>
+        <button class="btn btn-outline-danger" (click)="deleteResearch(r.id)">Elimina</button>
       </ul>
       <ngb-pagination class="d-flex justify-content-center"
       [collectionSize]="dataService.resultsLength" 

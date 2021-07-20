@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthenticationService } from './services/authentication.service';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Router} from "@angular/router";
+import {AuthenticationService} from "./services/authentication.service";
 
 
 export interface Result {
-  id?: number, 
-  titolo: string, 
-  descrizione: string, 
-  chiavi: string, 
+  id?: number,
+  titolo: string,
+  descrizione: string,
+  chiavi: string,
   url: string
 }
 @Injectable({
@@ -26,7 +27,7 @@ export class DataService {
   set results(value: any) {
     this._results = value;
   }
-  
+
   get resultsLength(): any{
     return this._resultsLength;
   }
@@ -38,7 +39,7 @@ export class DataService {
     this.resultsForPagination = this._results.slice(page*10 - 10, page*10)
   }
 
-  constructor(private http: HttpClient, private authService: AuthenticationService) {}
+  constructor(private http: HttpClient, private router:Router, private authService: AuthenticationService) {}
 
   setResults(chiave: string) {
     return this.http.get("/ricerca?q=" + chiave);
@@ -55,5 +56,22 @@ export class DataService {
     ).subscribe(responseData => {
       console.log(responseData)
     });
+  }
+
+
+  // Elisa modifiche
+  deleteResearch(id: number) {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.authService.userInfo?.access_token
+    });
+    console.log(this.authService.userInfo?.access_token);
+    this.http.delete('ricerca/' + id, {headers: headers}).subscribe(() => {
+      console.log(id);
+      this.router.navigate(['search']);
+    });
+  }
+
+  editResearch() {
+
   }
 }
