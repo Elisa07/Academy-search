@@ -1,6 +1,13 @@
 <div class="container">
   <div class="row">
-    <div class="col-12 col-lg-5">
+    <div class="col-12 d-flex justify-content-center">
+      <div id="successAdd" class="mb-2" [style.display]="isVisible ? 'block' : 'none'">
+        <p class="m-4"><fa-icon [icon]="check"></fa-icon>Il tuo sito è stato aggiunto con successo!</p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-lg-4">
       <h1>User info</h1>
       <div>
         <img class="d-block profile" src="../../assets/images/1012770.png" alt="User image">
@@ -51,7 +58,6 @@
           >
           <span class="error" *ngIf="addForm.controls['keys'].invalid && addForm.controls['keys'].touched">Campo obbligatorio</span>
         </div>
-
         <div class="w-100 d-flex justify-content-end">
           <button class="btn btn-outline-primary mb-5" [disabled]="addForm.invalid" type="submit">Aggiungi</button>
         </div>
@@ -60,28 +66,3 @@
   </div>
 </div>
 
-
-
-
-
-
-
-
-<!-- <div class="form-group">
-  <label for="keys">Chiavi</label>
-  <div class="form-array" formArrayName="keys">
-    <div *ngFor="let key of controls; let i = index" class="row">
-      <div class="col-10" [formGroupName]="i">
-        <input
-          type="text"
-          class="form-control"
-          formControlName="key"
-        >
-      </div>
-      <div class="col">
-        <button class="btn btn-outline-danger" type="button" (click)="removeKey(i)"><fa-icon [icon]="deleteIcon"></fa-icon></button>
-      </div>
-    </div>
-  </div>
-  <button class="btn btn-outline-primary"  type="button" (click)="addKeyInput()">Aggiungi chiave</button>
-</div> -->
