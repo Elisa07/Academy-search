@@ -32,20 +32,6 @@
       "titolo": "prova",
       "descrizione": "prova",
       "chiavi": "prova",
-      "url": "www.prova.com",
-      "id": 8
-    },
-    {
-      "titolo": "prova",
-      "descrizione": "Prova",
-      "chiavi": "prova",
-      "url": "www.prova.com",
-      "id": 9
-    },
-    {
-      "titolo": "prova",
-      "descrizione": "prova",
-      "chiavi": "prova",
       "url": "www.prova",
       "id": 10
     },
@@ -92,13 +78,6 @@
       "id": 16
     },
     {
-      "title": "Add nuova",
-      "description": "sdjfk",
-      "keys": "ciao, prova",
-      "url": "www.google.com",
-      "id": 17
-    },
-    {
       "url": "www.google.com",
       "id": 18
     },
@@ -132,7 +111,7 @@
     },
     {
       "titolo": "Angular",
-      "descrizione": "sjkhakjdfhs",
+      "descrizione": "Angular",
       "chiavi": "angular",
       "url": "angular.io",
       "id": 23

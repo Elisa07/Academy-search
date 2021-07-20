@@ -14,12 +14,12 @@ const router = jsonServer.router('./db.json');
 const tokenList = {};
 
 const userDB = {
-	users : [
-		{
-			user : 'user',
-			password : 'password'
-		}
-	]
+  users : [
+    {
+      user : 'user',
+      password : 'password'
+    }
+  ]
 };
 
 
@@ -76,24 +76,24 @@ server.post('/auth/login', (req, res) => {
 })
 
 server.post('/auth/refreshToken', (req, res) => {
-	const {refreshToken} = req.body;
-	if(refreshToken && (refreshToken in tokenList)) {
-	    const resultOfVerification = verifyRefreshToken(refreshToken);
-		if (!resultOfVerification) {
-			const token = createToken(tokenList[refreshToken]);
-			const dateToken = Date.now() + 60000*5;
-			const response = {
-				access_token: token,
-				tokenExpireIn: dateToken
-			}
-			res.status(200).json(response);
-		} else {
-			const message = 'Token non valido/scaduto';
-			res.status(401).json({status, message});
-		}
+  const {refreshToken} = req.body;
+  if(refreshToken && (refreshToken in tokenList)) {
+    const resultOfVerification = verifyRefreshToken(refreshToken);
+    if (!resultOfVerification) {
+      const token = createToken(tokenList[refreshToken]);
+      const dateToken = Date.now() + 60000*5;
+      const response = {
+        access_token: token,
+        tokenExpireIn: dateToken
+      }
+      res.status(200).json(response);
     } else {
-        res.status(400).send('Richiesta non valida')
+      const message = 'Token non valido/scaduto';
+      res.status(401).json({status, message});
     }
+  } else {
+    res.status(400).send('Richiesta non valida')
+  }
 })
 
 server.post('/auth/verifyToken', (req, res) => {
@@ -103,19 +103,70 @@ server.post('/auth/verifyToken', (req, res) => {
     res.status(status).json({status, message});
     return;
   }
-	const resultOfVerification = verifyTokenForVerificationEndPoint(req.headers.authorization.split(' ')[1]);
-	if (typeof(resultOfVerification) === 'number') {
-		const message = 'Token non valido/scaduto';
-		res.status(401).json({status, message});
-	} else {
-		resultOfVerification.iat = resultOfVerification.iat*1000;
-		resultOfVerification.exp = resultOfVerification.exp*1000;
-		res.status(200).json(resultOfVerification);
-	}
+  const resultOfVerification = verifyTokenForVerificationEndPoint(req.headers.authorization.split(' ')[1]);
+  if (typeof(resultOfVerification) === 'number') {
+    const message = 'Token non valido/scaduto';
+    res.status(401).json({status, message});
+  } else {
+    resultOfVerification.iat = resultOfVerification.iat*1000;
+    resultOfVerification.exp = resultOfVerification.exp*1000;
+    res.status(200).json(resultOfVerification);
+  }
+})
+
+server.delete('/eliminaRisultati', (req, res) => {
+  let isTuttiidPresenti = true;
+  const ids = req.query.id;
+  if (ids && Array.isArray(ids)) {
+    if (ids.length) {
+      ids.forEach((id) => {
+        const el = router.db.get('ricerca').getById(id).value();
+        if (!el) {
+          isTuttiidPresenti = false;
+        }
+      });
+    }
+  } else if (ids) {
+    if (ids) {
+      const el = router.db.get('ricerca').getById(ids).value()
+      if (!el) {
+        isTuttiidPresenti = false;
+      }
+    }
+  } else {
+    isTuttiidPresenti = false;
+  }
+
+  if (isTuttiidPresenti) {
+    try {
+      if (ids && Array.isArray(ids)) {
+        ids.forEach((id) => {
+          router.db.get('ricerca').removeById(id).value();
+        });
+      } else if (ids) {
+        router.db.get('ricerca').removeById(ids).value();
+      }
+      router.db.write();
+    } catch (e) {
+      isTuttiidPresenti = false;
+    }
+  }
+
+  if (isTuttiidPresenti) {
+    const status = 200;
+    res.status(status).json({});
+    return;
+  } else {
+    const status = 400;
+    const message = 'errore nel DELETE';
+    res.status(status).json({status, message});
+    return;
+  }
+
 })
 
 server.use(/^(?!\/auth).*$/,  (req, res, next) => {
-	if (req.method !== 'GET') {
+  if (req.method !== 'GET') {
     if (req.headers.authorization === undefined || req.headers.authorization.split(' ')[0] !== 'Bearer') {
       const status = 401;
       const message = 'header non corretto';
