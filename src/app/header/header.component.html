@@ -1,9 +1,10 @@
-<nav class="navbar navbar-light bg-light justify-content-between">
+<nav class="navbar navbar-light bg-white justify-content-between">
   <div class="container">
     <div class="justify-content-sm-between w-100 d-flex">
       <div class="d-flex align-items-center">
-        <a routerLink="search" class="navbar-brand"><fa-icon [icon]="searchIcon"></fa-icon></a>
-        <h3>AcademySearch</h3>
+        <a routerLink="search" class="navbar-brand">
+          <img src="../../assets/images/Logo (1).png" alt="logo" class="logo">
+        </a>
       </div>
       <div>
         <form (ngSubmit)="login()" [formGroup]="loginForm" class="d-flex align-items-center" *ngIf="!isLogged">

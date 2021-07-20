@@ -25,33 +25,34 @@ export class AddComponent implements OnInit {
       'id': new FormControl(null),
       'title': new FormControl(null, Validators.required),
       'description': new FormControl(null, Validators.required),
-      'keys': new FormArray([]),
+      'keys': new FormControl(null, Validators.required),
       'url': new FormControl(null, [Validators.required, Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')])
     });
   }
 
-  addKeyInput(): void {
-    console.log('Add key');
-    (<FormArray>this.addForm.get('keys')).push(
-      new FormGroup({
-        'key': new FormControl(null, Validators.required)
-      })
-    );
-  }
+  // addKeyInput(): void {
+  //   console.log('Add key');
+  //   (<FormArray>this.addForm.get('keys')).push(
+  //     new FormGroup({
+  //       'key': new FormControl(null, Validators.required)
+  //     })
+  //   );
+  // }
 
-  removeKey(i: number): void {
-    (<FormArray>this.addForm.get('keys')).removeAt(i);
-  }
+  // removeKey(i: number): void {
+  //   (<FormArray>this.addForm.get('keys')).removeAt(i);
+  // }
 
   onAddSearchItem(): void {
     var postData = {
       "titolo" : "",
       "descrizione" : "",
-      "chiavi" : [],
+      "chiavi" : "",
       "url" : ""
     }
     postData.titolo = (<HTMLInputElement>document.getElementById("title")).value;
     postData.descrizione = (<HTMLInputElement>document.getElementById("description")).value;
+    postData.chiavi = (<HTMLInputElement>document.getElementById("keys")).value;
     postData.url = (<HTMLInputElement>document.getElementById("url")).value;
     var token = this.cookieService.get("userInfo");
     this.dataService.addPost(postData);

@@ -19,3 +19,6 @@ nav {
   border-bottom: 2px solid var(--lightblue) !important;
   margin-bottom: 10px;
 }
+.logo {
+  width: 120px;
+}
