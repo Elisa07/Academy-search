@@ -7,7 +7,7 @@
         </a>
       </div>
       <div>
-        <form (ngSubmit)="login()" [formGroup]="loginForm" class="d-flex align-items-center" *ngIf="!isLogged">
+        <form (ngSubmit)="login()" [formGroup]="loginForm" class="d-flex align-items-center mt-3" *ngIf="!isLogged">
           <input class="form-control" type="text" placeholder="User" formControlName="username">
           <input class="form-control" type="password" placeholder="Password" formControlName="password">
           <button class="btn btn-outline-success my-2 my-sm-0" [disabled]="loginForm.invalid" type="submit">Login</button>
