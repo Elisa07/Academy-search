@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../services/authentication.service";
 import {faTimes, faTimesCircle} from "@fortawesome/free-solid-svg-icons";
+import { CookieService } from 'ngx-cookie-service';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-add',
@@ -12,7 +14,7 @@ export class AddComponent implements OnInit {
 
   addForm!: FormGroup;
   deleteIcon = faTimesCircle;
-  constructor(private authService: AuthenticationService) { }
+  constructor(private authService: AuthenticationService, private cookieService: CookieService, private dataService: DataService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -51,13 +53,8 @@ export class AddComponent implements OnInit {
     postData.titolo = (<HTMLInputElement>document.getElementById("title")).value;
     postData.descrizione = (<HTMLInputElement>document.getElementById("description")).value;
     postData.url = (<HTMLInputElement>document.getElementById("url")).value;
-    // var zio_bebbe = this.cookieService.get("userInfo");
-    
-    //token = prendere da zio_bebbe
-
-
-    // Chiamare il server tramite il service
-    // this.dataService.addPost(postData, token);
+    var token = this.cookieService.get("userInfo");
+    this.dataService.addPost(postData);
 
     this.initForm();
   }

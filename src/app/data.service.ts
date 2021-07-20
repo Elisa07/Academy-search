@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthenticationService } from './services/authentication.service';
 
 
 export interface Result {
@@ -17,6 +18,7 @@ export class DataService {
   public _results: any;
   public _resultsLength: any;
   public resultsForPagination: any;
+  public token: any;
 
   get results(): any{
     return this._results;
@@ -36,19 +38,20 @@ export class DataService {
     this.resultsForPagination = this._results.slice(page*10 - 10, page*10)
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthenticationService) {}
 
   setResults(chiave: string) {
     return this.http.get("/ricerca?q=" + chiave);
   }
 
-  addPost(postData: { titolo: string; descrizione: string; chiavi: any; url: string; }, token:any) {  
-    this.http.post(
-      "/ricerca/",
+  addPost(postData: { titolo: string; descrizione: string; chiavi: any; url: string; }) { 
+    const headers = new HttpHeaders ({
+      'Authorization': 'Bearer ' + this.authService.userInfo?.access_token
+    }) 
+    return this.http.post(
+      "/ricerca",
       postData,
-      // {
-      //   'Authorization': `Bearer ${token}`
-      // }
+      { headers: headers}
     ).subscribe(responseData => {
       console.log(responseData)
     });

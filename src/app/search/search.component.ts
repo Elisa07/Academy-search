@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faWindowClose } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-search',
@@ -10,6 +10,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 export class SearchComponent implements OnInit {
   public searchText: any;
   searchIcon = faSearch;
+  close = faWindowClose;
   page = 1;
   pageSize = 10;
 

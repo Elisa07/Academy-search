@@ -1,23 +1,24 @@
 <div class="container">
   <div class="mb-4 mt-4">
-    <h1 class="text-center">AcademySearch</h1>
-    <div class="input-group">
+    <img src="../../assets/images/Logo (1).png" alt="logo" class="mx-auto d-block">
+    <div class="input-group rounded">
       <input class="form-control" type="text" name="search" id="search" placeholder="Search" [(ngModel)]="searchText">
-      <button class="btn btn-primary" (click)="searchInput()"><fa-icon [icon]="searchIcon"></fa-icon></button>
-      <button class="btn btn-danger" (click)="deleteInput()">X</button>
+      <button class="btn btn-outline-primary" (click)="searchInput()"><fa-icon [icon]="searchIcon"></fa-icon></button>
+      <button class="btn btn-outline-danger" (click)="deleteInput()"><fa-icon [icon]="close"></fa-icon></button>
     </div>
   </div>
   <ng-container class="list-group">
     <div *ngIf="dataService.results">
-      <ul *ngFor="let r of dataService.resultsForPagination" class="list-group-item">
+      <ul *ngFor="let r of dataService.resultsForPagination" class="list-group-item border shadow p-3 mb-3 bg-body rounded">
         <li><strong>{{r.titolo}}</strong></li>
         <li>{{r.descrizione}}</li>
         <li><a href="{{r.url}}" target="_blank">{{r.url}}</a></li>
       </ul>
-      <!-- <ng-template id="notFound">
-          <p>Nessun risultato trovato</p>
-      </ng-template> -->
-      <ngb-pagination [collectionSize]="dataService.resultsLength" [pageSize]="pageSize" [(page)]="page" (pageChange)="dataService.setResultsForPage(page)"></ngb-pagination>
+      <ngb-pagination class="d-flex justify-content-center"
+      [collectionSize]="dataService.resultsLength" 
+      [pageSize]="pageSize" 
+      [(page)]="page" 
+      (pageChange)="dataService.setResultsForPage(page)"></ngb-pagination>
     </div>
   </ng-container>
 </div>
