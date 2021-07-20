@@ -45,7 +45,7 @@
         </div>
 
         <div class="w-100 d-flex justify-content-end">
-          <button class="btn btn-outline-primary mb-5" [disabled]="editForm.invalid" type="submit">Salva</button>
+          <button class="btn btn-outline-primary mb-5" [disabled]="editForm.invalid && !editForm.valueChanges" type="submit">Salva</button>
         </div>
       </form>
     </div>

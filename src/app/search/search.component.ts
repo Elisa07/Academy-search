@@ -8,7 +8,7 @@ import { faSearch, faWindowClose } from "@fortawesome/free-solid-svg-icons";
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  public searchText: any;
+  public searchText: string;
   searchIcon = faSearch;
   close = faWindowClose;
   page = 1;

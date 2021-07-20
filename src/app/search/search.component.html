@@ -2,18 +2,20 @@
   <div class="mb-4 mt-4">
     <img src="../../assets/images/Logo (1).png" alt="logo" class="mx-auto d-block">
     <div class="input-group rounded">
-      <input class="form-control" type="text" name="search" id="search" placeholder="Search" [(ngModel)]="searchText">
-      <button class="btn btn-outline-primary" (click)="searchInput()"><fa-icon [icon]="searchIcon"></fa-icon></button>
-      <button class="btn btn-outline-danger" (click)="deleteInput()"><fa-icon [icon]="close"></fa-icon></button>
+      <form>
+        <input class="form-control" type="text" name="search" id="search" placeholder="Search" [(ngModel)]="searchText">
+        <button class="btn btn-outline-primary" (click)="searchInput()" type="submit" [disabled]="searchText.length === 0"><fa-icon [icon]="searchIcon"></fa-icon></button>
+        <button class="btn btn-outline-danger" (click)="deleteInput()"><fa-icon [icon]="close"></fa-icon></button>
+      </form>
     </div>
   </div>
   <ng-container class="list-group">
-    <div *ngIf="dataService.results">
+    <div *ngIf="dataService.results.length !== 0">
       <ul *ngFor="let r of dataService.resultsForPagination;" class="list-group-item">
         <li><strong>{{r.titolo}}</strong></li>
         <li>{{r.descrizione}}</li>
         <li><a href="{{r.url}}" target="_blank">{{r.url}}</a></li>
-        <button class="btn btn-outline-primary" routerLink="{{r.id}}" >Modifica</button>
+        <button class="btn btn-outline-primary" routerLink="{{r.id}}">Modifica</button>
         <button class="btn btn-outline-danger" (click)="deleteResearch(r.id)">Elimina</button>
       </ul>
       <ngb-pagination class="d-flex justify-content-center"

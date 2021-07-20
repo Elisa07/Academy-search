@@ -16,15 +16,16 @@ export interface Result {
 })
 
 export class DataService {
-  public _results: any;
+  public _results: Result[] = [];
   public _resultsLength: any;
   public resultsForPagination: any;
   public token: any;
 
-  get results(): any{
+  get results(): Result[]{
     return this._results;
+
   }
-  set results(value: any) {
+  set results(value: Result[]) {
     this._results = value;
   }
 
@@ -42,7 +43,7 @@ export class DataService {
   constructor(private http: HttpClient, private router:Router, private authService: AuthenticationService) {}
 
   setResults(chiave: string) {
-    return this.http.get("/ricerca?q=" + chiave).subscribe(
+    return this.http.get<Result[]>("/ricerca?q=" + chiave).subscribe(
       data => {
         this.results = data;
         console.log(data);
@@ -83,7 +84,7 @@ export class DataService {
       'Authorization': 'Bearer ' + this.authService.userInfo?.access_token
     });
     console.log(this.authService.userInfo?.access_token);
-    this.http.delete('ricerca/' + id, {headers: headers}).subscribe(() => {
+    this.http.delete('ricerca/' + id , {headers: headers}).subscribe(() => {
       console.log(id);
       this.router.navigate(['search']);
     });
