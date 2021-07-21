@@ -22,25 +22,11 @@
       "url": "https://www.typescriptlang.org"
     },
     {
-      "titolo": "ciao",
-      "descrizione": "ciao",
-      "chiavi": [],
-      "url": "www.ciao.com",
-      "id": 4
-    },
-    {
       "titolo": "prova",
       "descrizione": "test",
       "chiavi": [],
       "url": "www.ciao.com",
       "id": 5
-    },
-    {
-      "titolo": "prova",
-      "descrizione": "prova",
-      "chiavi": "prova",
-      "url": "www.prova.com",
-      "id": 6
     },
     {
       "titolo": "prova",

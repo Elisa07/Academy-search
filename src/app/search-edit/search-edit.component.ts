@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
-import {DataService} from "../data.service";
-import {Result} from "../data.service";
+import {DataService} from "../services/data.service";
+import {Result} from "../services/data.service";
 
 @Component({
   selector: 'app-search-edit',

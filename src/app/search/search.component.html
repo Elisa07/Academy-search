@@ -7,7 +7,7 @@
           <form class="input-group">
             <input class="form-control me-2 rounded" type="search" name="search" id="search" placeholder="Search" [(ngModel)]="searchText">
             <div>
-              <button class="btn btn-outline-danger me-2" type="submit" (click)="deleteInput()"><fa-icon [icon]="close"></fa-icon></button>
+              <button class="btn btn-outline-danger me-2" type="button" (click)="deleteInput()"><fa-icon [icon]="close"></fa-icon></button>
               <button class="btn btn-outline-primary" (click)="searchInput()" type="submit" [disabled]="searchText.length === 0"><fa-icon [icon]="searchIcon"></fa-icon></button>
             </div>
           </form>

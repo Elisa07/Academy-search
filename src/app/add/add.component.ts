@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../services/authentication.service";
-import {faCheck, faTimesCircle} from "@fortawesome/free-solid-svg-icons";
+import {faCheck, faCheckSquare, faEdit, faTimesCircle, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faSquare} from "@fortawesome/free-regular-svg-icons";
 import { CookieService } from 'ngx-cookie-service';
-import {DataService, Result} from '../data.service';
+import {DataService, Result} from '../services/data.service';
+import {NgbNavConfig} from '@ng-bootstrap/ng-bootstrap';
+import {Router} from "@angular/router";
 
 interface CheckBox {
   name: string, value: string, checked: boolean
@@ -12,20 +15,30 @@ interface CheckBox {
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
-  styleUrls: ['./add.component.css']
+  styleUrls: ['./add.component.css'],
+  providers: [NgbNavConfig]
 })
 export class AddComponent implements OnInit {
 
   addForm!: FormGroup;
   deleteIcon = faTimesCircle;
+  trashIcon = faTrash;
   check = faCheck;
+  editIcon = faEdit;
+  checkSquareIcon = faCheckSquare;
+  unCheckSquareIcon = faSquare;
   isVisible = false;
   researches: Result[] = [];
   checkBox: CheckBox[] = []
   editMode = false;
   allSelected = false;
 
-  constructor(private authService: AuthenticationService, private cookieService: CookieService, private dataService: DataService) { }
+
+  constructor(private authService: AuthenticationService,
+              private cookieService: CookieService,
+              private dataService: DataService,
+              private router: Router) {
+  }
 
   ngOnInit(): void {
     this.initForm();
@@ -92,6 +105,8 @@ export class AddComponent implements OnInit {
     this.allSelected = !this.allSelected;
   }
 
+
+
   onDelete() {
     let deleteIds: number[] = [];
     for (let i = 0; i < this.checkBox.length; i++) {
@@ -114,5 +129,12 @@ export class AddComponent implements OnInit {
     for (let i = 0; i < this.checkBox.length; i++) {
       this.checkBox[i].checked = false;
     }
+  }
+
+  onDeleteSearch(id: number) {
+    this.dataService.deleteResearch(id).subscribe(() => {
+      this.router.navigate(['admin']);
+      this.onGetResearches();
+    });
   }
 }

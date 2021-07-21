@@ -1,96 +1,119 @@
 <div class="container">
   <div class="row">
-
-  </div>
-  <div>
-    <h1 class="text-center">Admin</h1>
-  </div>
-  <div class="row">
-    <div class="col-12 col-lg-6" *ngIf="researches.length !== 0">
-      <div>
-        <button *ngIf="!editMode" class="btn btn-outline-primary" (click)="editMode = true;">Modifica la lista delle ricerche</button>
-        <button *ngIf="editMode"
-                class="btn btn-outline-primary"
-                (click)="onToggleSelection()"
-        >
-          {{allSelected ? 'Deseleziona tutti' : 'Seleziona tutti'}}
-        </button>
-        <button *ngIf="editMode" class="btn btn-outline-danger" (click)="closeEditMode()">X</button>
-        <button *ngIf="editMode"  class="btn btn-outline-danger" (click)="onDelete()">Cancella selezione</button>
-      </div>
-      <ul>
-        <li *ngFor="let r of researches; let i = index">
-          <div class="row">
-            <div *ngIf="editMode" class="col-1 d-flex align-items-center">
-              <input type="checkbox"
-                     [value]="checkBox[i].value"
-                     [(ngModel)]="checkBox[i].checked"
-              > </div>
-            <div class="col-11">
-              <h4>{{r.titolo}}</h4>
-              <p>{{r.descrizione}}</p>
+    <div class="col">
+      <ul ngbNav #nav="ngbNav" class="nav-tabs">
+        <!-- Admin info -->
+        <li ngbNavItem>
+          <a ngbNavLink>Informazioni utente</a>
+          <ng-template ngbNavContent>
+            <div class="row">
+              <img class="col-3" src="./assets/images/1012770.png" alt="Utente">
+              <div class="col">
+                <button class="col btn btn-outline-danger" (click)="logout()">Logout</button>
+              </div>
             </div>
-          </div>
-
-
-
+          </ng-template>
+        </li>
+        <!-- Cronologia -->
+        <li ngbNavItem>
+          <a ngbNavLink>Cronologia ricerche</a>
+          <ng-template ngbNavContent>
+            <div class="col-12 col-lg-10 m-auto" *ngIf="researches.length !== 0">
+              <div>
+                <button *ngIf="!editMode" class="btn btn-outline-primary" (click)="editMode = true;">Modifica la lista delle ricerche</button>
+                <button *ngIf="editMode"
+                        class="btn btn-outline-primary"
+                        (click)="onToggleSelection()"
+                >
+                  <fa-icon [icon]="!allSelected ? checkSquareIcon : unCheckSquareIcon"></fa-icon>{{allSelected ? 'Deseleziona tutti' : 'Seleziona tutti'}}
+                </button>
+                <button *ngIf="editMode"  class="btn btn-outline-danger" (click)="onDelete()"><fa-icon [icon]="trashIcon"></fa-icon>Cancella selezione</button>
+                <button *ngIf="editMode" class="btn btn-outline-danger float-end" (click)="closeEditMode()">Termina modifica</button>
+              </div>
+              <ul>
+                <li *ngFor="let r of researches; let i = index">
+                  <div class="row">
+                    <div *ngIf="editMode" class="col-1 d-flex align-items-center">
+                      <input type="checkbox"
+                             class="form-check-input"
+                             (change)="this.allSelected = false;"
+                             [value]="checkBox[i].value"
+                             [(ngModel)]="checkBox[i].checked"
+                      > </div>
+                    <div class="col-9">
+                      <h4>{{r.titolo}}</h4>
+                      <p>{{r.descrizione}}</p>
+                    </div>
+                    <div class="col-2 d-flex flex-column align-items-end justify-content-center" *ngIf="editMode">
+                      <button class="btn btn-outline-danger" (click)="onDeleteSearch(r.id)"><fa-icon [icon]="trashIcon"></fa-icon></button>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </ng-template>
+        </li>
+        <!-- Aggiungi ricerca -->
+        <li ngbNavItem>
+          <a ngbNavLink>Aggiungi ricerca</a>
+          <ng-template ngbNavContent>
+            <div class="col-12 col-lg-10 m-auto">
+              <h4>Aggiungi un nuovo item</h4>
+              <p>Compila il form sottostante per aggiungere un nuovo elemento.</p>
+              <div class="col-12" *ngIf="isVisible">
+                <div class="alert alert-success">
+                  <span><fa-icon [icon]="check"></fa-icon>La ricerca è stata aggiunta con successo!</span>
+                </div>
+              </div>
+              <form [formGroup]="addForm" (ngSubmit)="onAddSearchItem()">
+                <div class="form-group">
+                  <label for="title">Titolo</label>
+                  <input
+                    id="title"
+                    class="form-control"
+                    formControlName="title"
+                    type="text"
+                  >
+                  <span class="error" *ngIf="addForm.controls['title'].invalid && addForm.controls['title'].touched">Inserisci un titolo valido.</span>
+                </div>
+                <div class="form-group">
+                  <label for="description">Descrizione</label>
+                  <textarea
+                    id="description"
+                    class="form-control"
+                    formControlName="description"
+                  ></textarea>
+                  <span class="error" *ngIf="addForm.controls['description'].invalid && addForm.controls['description'].touched">Inserisci una descrizione valida.</span>
+                </div>
+                <div class="form-group">
+                  <label for="url">Url</label>
+                  <input
+                    id="url"
+                    type="url"
+                    class="form-control"
+                    formControlName="url"
+                  >
+                  <span class="error" *ngIf="addForm.controls['url'].invalid && addForm.controls['url'].touched">Inserisci un url valido.</span>
+                </div>
+                <div class="form-group">
+                  <label for="keys">Chiavi</label>
+                  <input
+                    id="keys"
+                    type="keys"
+                    class="form-control"
+                    formControlName="keys"
+                  >
+                  <span class="error" *ngIf="addForm.controls['keys'].invalid && addForm.controls['keys'].touched">Inserisci un elenco di chiavi valido.</span>
+                </div>
+                <div class="w-100 d-flex justify-content-end">
+                  <button class="btn btn-outline-primary mb-5" [disabled]="addForm.invalid" type="submit">Aggiungi</button>
+                </div>
+              </form>
+            </div>
+          </ng-template>
         </li>
       </ul>
-    </div>
-    <div class="col-12 col-lg-6">
-      <h4>Aggiungi un nuovo item</h4>
-      <p>Compila il form sottostante per aggiungere un nuovo elemento.</p>
-      <div class="col-12" *ngIf="isVisible">
-        <div class="alert alert-success">
-          <span><fa-icon [icon]="check"></fa-icon>La ricerca è stata aggiunta con successo!</span>
-        </div>
-      </div>
-      <form [formGroup]="addForm" (ngSubmit)="onAddSearchItem()">
-        <div class="form-group">
-          <label for="title">Titolo</label>
-          <input
-            id="title"
-            class="form-control"
-            formControlName="title"
-            type="text"
-          >
-          <span class="error" *ngIf="addForm.controls['title'].invalid && addForm.controls['title'].touched">Campo obbligatorio</span>
-        </div>
-        <div class="form-group">
-          <label for="description">Descrizione</label>
-          <textarea
-            id="description"
-            class="form-control"
-            formControlName="description"
-          ></textarea>
-          <span class="error" *ngIf="addForm.controls['description'].invalid && addForm.controls['description'].touched">Campo obbligatorio</span>
-        </div>
-        <div class="form-group">
-          <label for="url">Url</label>
-          <input
-            id="url"
-            type="url"
-            class="form-control"
-            formControlName="url"
-          >
-          <span class="error" *ngIf="addForm.controls['url'].invalid && addForm.controls['url'].touched">Campo obbligatorio</span>
-        </div>
-        <div class="form-group">
-          <label for="keys">Chiavi</label>
-          <input
-          id="keys"
-          type="keys"
-          class="form-control"
-          formControlName="keys"
-          >
-          <span class="error" *ngIf="addForm.controls['keys'].invalid && addForm.controls['keys'].touched">Campo obbligatorio</span>
-        </div>
-        <div class="w-100 d-flex justify-content-end">
-          <button class="btn btn-outline-primary mb-5" [disabled]="addForm.invalid" type="submit">Aggiungi</button>
-        </div>
-
-      </form>
+      <div [ngbNavOutlet]="nav" class="mt-2"></div>
     </div>
   </div>
 </div>
-

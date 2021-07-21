@@ -5,6 +5,20 @@
   --black: #2f2f2f;
 }
 
+textarea:focus,
+textarea.form-control:focus,
+input.form-control:focus,
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=number]:focus,
+[type=text].form-control:focus,
+[type=password].form-control:focus,
+[type=email].form-control:focus,
+[type=tel].form-control:focus,
+[contenteditable].form-control:focus {
+  box-shadow: none;
+}
 fa-icon {
   margin: 5px;
 }
@@ -40,3 +54,15 @@ button.btn-outline-primary[disabled] {
   background-color: var(--lightblue);
 }
 
+a {
+  color: var(--lightblue) !important;
+  text-decoration: underline!important;
+}
+
+a:hover {
+  opacity: 80%;
+}
+
+a.active {
+  font-weight: bold!important;
+}

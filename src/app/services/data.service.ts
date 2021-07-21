@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from "@angular/router";
-import {AuthenticationService} from "./services/authentication.service";
+import {AuthenticationService} from "./authentication.service";
 import {Observable} from "rxjs";
-import {ResultTemplateContext} from "@ng-bootstrap/ng-bootstrap/typeahead/typeahead-window";
-
 
 export interface Result {
   id: number,
@@ -78,15 +76,11 @@ export class DataService {
     }
     return undefined;
   }
-  deleteResearch(id: number) {
+  deleteResearch(id: number): Observable<void> {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.authService.userInfo?.access_token
     });
-    console.log(this.authService.userInfo?.access_token);
-    this.http.delete('ricerca/' + id , {headers: headers}).subscribe(() => {
-      console.log(id);
-      this.router.navigate(['search']);
-    });
+    return this.http.delete<void>('ricerca/' + id , {headers: headers});
   }
 
   setResearch(id: number, research: {titolo: string, descrizione: string, chiavi: string, url: string}) {
