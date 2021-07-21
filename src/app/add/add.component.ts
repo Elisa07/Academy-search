@@ -33,6 +33,8 @@ export class AddComponent implements OnInit {
   editMode = false;
   allSelected = false;
 
+  selectedNumber = 0;
+
 
   constructor(private authService: AuthenticationService,
               private cookieService: CookieService,
@@ -88,6 +90,7 @@ export class AddComponent implements OnInit {
       for (let i = 0; i < this.researches.length; i++) {
         this.checkBox.push({name: String(this.researches[i].id), value: String(this.researches[i].id), checked: false});
       }
+      this.selectedNumber = 0;
     })
   }
 
@@ -95,11 +98,13 @@ export class AddComponent implements OnInit {
     if (!this.allSelected) {
       for (const c of this.checkBox) {
         c.checked = true;
+        this.selectedNumber = this.researches.length;
       }
     }
     else {
       for (const c of this.checkBox) {
         c.checked = false;
+        this.selectedNumber = 0;
       }
     }
     this.allSelected = !this.allSelected;
@@ -134,5 +139,17 @@ export class AddComponent implements OnInit {
       this.router.navigate(['admin']);
       this.onGetResearches();
     });
+  }
+
+  onToggleOne(i: number) {
+    if (this.checkBox[i].checked) {
+      this.selectedNumber++;
+      if (this.selectedNumber === this.researches.length)
+        this.allSelected = true;
+    }
+    else {
+      this.selectedNumber--;
+      this.allSelected = false;
+    }
   }
 }

@@ -36,7 +36,7 @@
                     <div *ngIf="editMode" class="col-1 d-flex align-items-center">
                       <input type="checkbox"
                              class="form-check-input"
-                             (change)="this.allSelected = false;"
+                             (change)="onToggleOne(i)"
                              [value]="checkBox[i].value"
                              [(ngModel)]="checkBox[i].checked"
                       > </div>
