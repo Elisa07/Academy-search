@@ -105,8 +105,6 @@ export class AddComponent implements OnInit {
     this.allSelected = !this.allSelected;
   }
 
-
-
   onDelete() {
     let deleteIds: number[] = [];
     for (let i = 0; i < this.checkBox.length; i++) {

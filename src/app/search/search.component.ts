@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../services/data.service';
-import { faSearch, faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import {faEdit, faSearch, faTrash, faWindowClose} from "@fortawesome/free-solid-svg-icons";
 import {AuthenticationService} from "../services/authentication.service";
 import {Router} from "@angular/router";
 
@@ -13,6 +13,8 @@ export class SearchComponent implements OnInit {
   public searchText: string;
   searchIcon = faSearch;
   close = faWindowClose;
+  editIcon = faEdit;
+  trashIcon = faTrash;
   page = 1;
   pageSize = 10;
   isVisible = false;

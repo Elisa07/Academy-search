@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="mb-4 mt-4">
+  <div class="mb-4">
     <img src="../../assets/images/Logo (1).png" alt="logo" class="mx-auto d-block">
     <div class="row">
       <div class="col-md-8 offset-md-2">
@@ -22,15 +22,17 @@
       </div>
       <ng-container class="list-group" *ngIf="!isVisible">
         <div *ngIf="dataService.results.length !== 0">
-          <ul *ngFor="let r of dataService.resultsForPagination;" class="list-group-item border rounded-3 shadow-sm p-3 mb-3 bg-body">
-            <li><strong>{{r.titolo}}</strong></li>
-            <li>{{r.descrizione}}</li>
-            <li><a href="{{r.url}}" target="_blank">{{r.url}}</a></li>
-            <div *ngIf="authService.isLogged">
-              <button class="btn btn-outline-primary mt-2" routerLink="{{r.id}}">Modifica</button>
-              <button class="btn btn-outline-danger ms-3 mt-2" (click)="deleteResearch(r.id)">Elimina</button>
+          <div *ngFor="let r of dataService.resultsForPagination;" class="border rounded-3 shadow-sm p-3 mb-3 bg-body row">
+            <div [class]="authService.isLogged ? 'col-10' : 'col-12'">
+              <h5><strong>{{r.titolo}}</strong></h5>
+              <p>{{r.descrizione}}<br>
+                <a href="{{r.url}}" target="_blank">{{r.url}}</a></p>
             </div>
-          </ul>
+            <div *ngIf="authService.isLogged" class="col-2 d-flex flex-column justify-content-center align-items-end">
+              <button class="btn btn-outline-secondary mt-2 w-100" routerLink="{{r.id}}"><fa-icon [icon]="editIcon"></fa-icon></button>
+              <button class="btn btn-outline-danger ms-3 mt-2 w-100" (click)="deleteResearch(r.id)"><fa-icon [icon]="trashIcon"></fa-icon></button>
+            </div>
+          </div>
           <ngb-pagination class="d-flex justify-content-center"
           id="pagination"
           [collectionSize]="dataService.resultsLength"

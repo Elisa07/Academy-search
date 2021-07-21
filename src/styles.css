@@ -3,6 +3,7 @@
   --lightblue: #006062;
   --red: #ef5159;
   --black: #2f2f2f;
+  --yellow: #e3b317;
 }
 
 textarea:focus,
@@ -36,6 +37,16 @@ h1, h2, h3, h4, h5, p{
   background-color: var(--red);
 }
 
+.btn-outline-secondary {
+  color: var(--yellow);
+  border-color: var(--yellow);
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--yellow);
+  border-color: var(--yellow);
+}
+
 span.error {
   color: var(--red);
   font-size: 10px;
@@ -52,6 +63,7 @@ button.btn-outline-primary[disabled] {
 
 .btn-outline-primary:hover {
   background-color: var(--lightblue);
+  border-color: var(--lightblue);
 }
 
 a {

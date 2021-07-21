@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <ul ngbNav #nav="ngbNav" class="nav-tabs">
+      <ul ngbNav #nav="ngbNav" class="nav-tabs mb-4">
         <!-- Admin info -->
         <li ngbNavItem>
           <a ngbNavLink>Informazioni utente</a>
@@ -19,10 +19,10 @@
           <a ngbNavLink>Cronologia ricerche</a>
           <ng-template ngbNavContent>
             <div class="col-12 col-lg-10 m-auto" *ngIf="researches.length !== 0">
-              <div>
-                <button *ngIf="!editMode" class="btn btn-outline-primary" (click)="editMode = true;">Modifica la lista delle ricerche</button>
+              <div class="mb-3  clearfix">
+                <button *ngIf="!editMode" class="btn btn-outline-secondary float-end"(click)="editMode = true;">Modifica la lista delle ricerche</button>
                 <button *ngIf="editMode"
-                        class="btn btn-outline-primary"
+                        class="btn btn-outline-primary me-2"
                         (click)="onToggleSelection()"
                 >
                   <fa-icon [icon]="!allSelected ? checkSquareIcon : unCheckSquareIcon"></fa-icon>{{allSelected ? 'Deseleziona tutti' : 'Seleziona tutti'}}
@@ -30,9 +30,9 @@
                 <button *ngIf="editMode"  class="btn btn-outline-danger" (click)="onDelete()"><fa-icon [icon]="trashIcon"></fa-icon>Cancella selezione</button>
                 <button *ngIf="editMode" class="btn btn-outline-danger float-end" (click)="closeEditMode()">Termina modifica</button>
               </div>
-              <ul>
+              <ul class="p-2">
                 <li *ngFor="let r of researches; let i = index">
-                  <div class="row">
+                  <div class="row border rounded-3 shadow-sm p-3 mb-3 bg-body">
                     <div *ngIf="editMode" class="col-1 d-flex align-items-center">
                       <input type="checkbox"
                              class="form-check-input"
@@ -40,9 +40,10 @@
                              [value]="checkBox[i].value"
                              [(ngModel)]="checkBox[i].checked"
                       > </div>
-                    <div class="col-9">
-                      <h4>{{r.titolo}}</h4>
-                      <p>{{r.descrizione}}</p>
+                    <div [class]="editMode ? 'col-9' : 'col-12'">
+                      <h5>{{r.titolo}}</h5>
+                      <p>{{r.descrizione}}<br>
+                        <a href="{{r.url}}" target="_blank">{{r.url}}</a></p>
                     </div>
                     <div class="col-2 d-flex flex-column align-items-end justify-content-center" *ngIf="editMode">
                       <button class="btn btn-outline-danger" (click)="onDeleteSearch(r.id)"><fa-icon [icon]="trashIcon"></fa-icon></button>
