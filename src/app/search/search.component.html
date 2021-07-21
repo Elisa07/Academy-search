@@ -5,9 +5,11 @@
       <div class="col-md-8 offset-md-2">
         <div class="input-group rounded">
           <form class="input-group">
-            <input class="form-control" type="text" name="search" id="search" placeholder="Search" [(ngModel)]="searchText">
-            <button class="btn btn-outline-primary" (click)="searchInput()" type="submit" [disabled]="searchText.length === 0"><fa-icon [icon]="searchIcon"></fa-icon></button>
-            <button class="btn btn-outline-danger" (click)="deleteInput()"><fa-icon [icon]="close"></fa-icon></button>
+            <input class="form-control me-2 rounded" type="search" name="search" id="search" placeholder="Search" [(ngModel)]="searchText">
+            <div>
+              <button class="btn btn-outline-danger me-2" type="submit" (click)="deleteInput()"><fa-icon [icon]="close"></fa-icon></button>
+              <button class="btn btn-outline-primary" (click)="searchInput()" type="submit" [disabled]="searchText.length === 0"><fa-icon [icon]="searchIcon"></fa-icon></button>
+            </div>
           </form>
         </div>
       </div>
@@ -15,7 +17,10 @@
   </div>
   <div class="row">
     <div class="col">
-      <ng-container class="list-group">
+      <div *ngIf="isVisible" class="d-flex justify-content-center">
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+      <ng-container class="list-group" *ngIf="!isVisible">
         <div *ngIf="dataService.results.length !== 0">
           <ul *ngFor="let r of dataService.resultsForPagination;" class="list-group-item border rounded-3 shadow-sm p-3 mb-3 bg-body">
             <li><strong>{{r.titolo}}</strong></li>
@@ -27,10 +32,12 @@
             </div>
           </ul>
           <ngb-pagination class="d-flex justify-content-center"
+          id="pagination"
           [collectionSize]="dataService.resultsLength"
           [pageSize]="pageSize"
           [(page)]="page"
-          (pageChange)="dataService.setResultsForPage(page)"></ngb-pagination>
+          (pageChange)="dataService.setResultsForPage(page)">
+          </ngb-pagination>
         </div>
       </ng-container>
     </div>

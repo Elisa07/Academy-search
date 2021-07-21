@@ -15,10 +15,17 @@
         <span class="error" *ngIf="loginError">{{logginErrorMessage}}</span>
       </div>
       <div *ngIf="isLogged" class="d-flex align-items-center">
-        <button class="btn btn-outline-danger" (click)="logout()">Logout</button>
-        <!-- <a routerLink="admin"><fa-icon [icon]="userIcon" style="font-size: 30px; color: darkolivegreen"></fa-icon></a> -->
-        <a routerLink="admin"><img class="userImage" src="./assets/images/1012770.png"></a>
+        <div *ngIf="isVisible" class="d-flex justify-content-end">
+          <app-loading-spinner></app-loading-spinner>
+        </div>
+        <div *ngIf="!isVisible">
+          <button class="btn btn-outline-danger" (click)="logout()">Logout</button>
+          <!-- <a routerLink="admin"><fa-icon [icon]="userIcon" style="font-size: 30px; color: darkolivegreen"></fa-icon></a> -->
+          <a routerLink="admin"><img class="userImage" src="./assets/images/1012770.png"></a>
+        </div>
+
       </div>
     </div>
   </div>
 </nav>
+

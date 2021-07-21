@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../data.service';
 import { faSearch, faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import {AuthenticationService} from "../services/authentication.service";
@@ -11,18 +11,21 @@ import {AuthenticationService} from "../services/authentication.service";
 export class SearchComponent implements OnInit {
   public searchText: string;
   searchIcon = faSearch;
-  close = faWindowClose;
+  close = faWindowClose;;
   page = 1;
   pageSize = 10;
+  isVisible = false;
 
   constructor(public dataService: DataService, public authService: AuthenticationService) {
     this.searchText = "";
   }
 
-  ngOnInit() : void {}
+  ngOnInit() : void {
+  }
 
   searchInput() {
     this.dataService.setResults(this.searchText);
+    this.timeSpinner();
   }
 
   deleteInput() {
@@ -33,5 +36,12 @@ export class SearchComponent implements OnInit {
     this.dataService.deleteResearch(id);
     this.searchInput();
   }
+
+  timeSpinner(): void {
+    this.isVisible = true;
+    setTimeout(() => {
+      this.isVisible = false;
+    }, 700);
+}
 
 }

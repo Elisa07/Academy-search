@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from "../services/authentication.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {faSearch, faUserCircle} from "@fortawesome/free-solid-svg-icons";
+import { Router} from "@angular/router";
+
 
 @Component({
   selector: 'app-header',
@@ -14,11 +16,12 @@ export class HeaderComponent implements OnInit {
   loginForm!: FormGroup;
   userIcon = faUserCircle;
   searchIcon = faSearch;
+  isVisible = false;
 
   loginError: boolean = false;
   logginErrorMessage!: string;
 
-  constructor(private authService: AuthenticationService) { }
+  constructor(private authService: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -43,9 +46,18 @@ export class HeaderComponent implements OnInit {
         // console.log(error);
       });
     this.loginForm.reset();
+    this.timeSpinner();
   }
 
   logout() {
     this.authService.logout();
+    this.timeSpinner();
+  }
+
+  timeSpinner(): void {
+      this.isVisible = true;
+      setTimeout(() => {
+        this.isVisible = false;
+      }, 700);
   }
 }
