@@ -9,8 +9,14 @@
     <div class="col-12 col-lg-6" *ngIf="researches.length !== 0">
       <div>
         <button *ngIf="!editMode" class="btn btn-outline-primary" (click)="editMode = true;">Modifica la lista delle ricerche</button>
-        <button *ngIf="editMode" class="btn btn-outline-primary" (click)="onSelectAll()">Seleziona tutti</button>
-        <button *ngIf="editMode" class="btn btn-outline-danger" (click)="editMode = false">X</button>
+        <button *ngIf="editMode"
+                class="btn btn-outline-primary"
+                (click)="onToggleSelection()"
+        >
+          {{allSelected ? 'Deseleziona tutti' : 'Seleziona tutti'}}
+        </button>
+        <button *ngIf="editMode" class="btn btn-outline-danger" (click)="closeEditMode()">X</button>
+        <button *ngIf="editMode"  class="btn btn-outline-danger" (click)="onDelete()">Cancella selezione</button>
       </div>
       <ul>
         <li *ngFor="let r of researches; let i = index">
@@ -18,6 +24,7 @@
             <div *ngIf="editMode" class="col-1 d-flex align-items-center">
               <input type="checkbox"
                      [value]="checkBox[i].value"
+                     [(ngModel)]="checkBox[i].checked"
               > </div>
             <div class="col-11">
               <h4>{{r.titolo}}</h4>
