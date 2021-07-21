@@ -7,7 +7,7 @@ import {ResultTemplateContext} from "@ng-bootstrap/ng-bootstrap/typeahead/typeah
 
 
 export interface Result {
-  id?: number,
+  id: number,
   titolo: string,
   descrizione: string,
   chiavi: string,
@@ -56,7 +56,7 @@ export class DataService {
     );
   }
 
-  addPost(postData: { titolo: string, descrizione: string, chiavi: string, url: string }) {
+  addPost(postData: { titolo: string, descrizione: string, chiavi: string, url: string }): Observable<any> {
     const headers = new HttpHeaders ({
       'Authorization': 'Bearer ' + this.authService.userInfo?.access_token
     })
@@ -64,12 +64,9 @@ export class DataService {
       "/ricerca",
       postData,
       { headers: headers}
-    ).subscribe(responseData => {
-      console.log(responseData)
-    });
+    );
   }
 
-  // Elisa modifiche
   getSearch(id: number): Result | undefined {
     for (let s of this._results) {
       console.log(s.id === id);
@@ -96,13 +93,25 @@ export class DataService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.authService.userInfo?.access_token
     });
-    this.http.patch('ricerca/' + id, research, {headers: headers}).subscribe((respData) => {
-      console.log('Patch eseguita');
-      console.log(respData);
+    this.http.patch('ricerca/' + id, research, {headers: headers}).subscribe((resData) => {
+      console.log(resData);
     })
   }
 
-  getAllResearches(): Observable<Result[]>{
+  getAllResearches(): Observable<Result[]> {
     return this.http.get<Result[]>('ricerca');
+  }
+
+  removeResearches(ids: number[]): Observable<void> {
+    let idUrl = '';
+
+    for (let i = 0; i < ids.length; i++){
+      idUrl += 'id=' + ids[i];
+      if (i !== ids.length - 1) {
+        idUrl += '&';
+      }
+    }
+
+    return this.http.delete<void>('http://localhost:3000/eliminaRisultati?' + idUrl);
   }
 }
