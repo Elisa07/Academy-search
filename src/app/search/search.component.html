@@ -29,8 +29,8 @@
                 <a href="{{r.url}}" target="_blank">{{r.url}}</a></p>
             </div>
             <div *ngIf="authService.isLogged" class="col-2 d-flex flex-column justify-content-center align-items-end">
-              <button class="btn btn-outline-secondary mt-2 w-100" routerLink="{{r.id}}"><fa-icon [icon]="editIcon"></fa-icon></button>
-              <button class="btn btn-outline-danger ms-3 mt-2 w-100" (click)="deleteResearch(r.id)"><fa-icon [icon]="trashIcon"></fa-icon></button>
+              <button class="btn btn-outline-secondary mt-2" routerLink="{{r.id}}"><fa-icon [icon]="editIcon"></fa-icon></button>
+              <button class="btn btn-outline-danger ms-3 mt-2" (click)="deleteResearch(r.id)"><fa-icon [icon]="trashIcon"></fa-icon></button>
             </div>
           </div>
           <ngb-pagination class="d-flex justify-content-center"

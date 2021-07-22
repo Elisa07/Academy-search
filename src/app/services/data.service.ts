@@ -46,7 +46,6 @@ export class DataService {
     return this.http.get<Result[]>("/ricerca?q=" + chiave).subscribe(
       data => {
         this.results = data;
-        console.log(data);
         this.setResultsLength(Object.keys(data).length);
         this.setResultsForPage(1);
       },
@@ -58,7 +57,7 @@ export class DataService {
     const headers = new HttpHeaders ({
       'Authorization': 'Bearer ' + this.authService.userInfo?.access_token
     })
-    return this.http.post(
+    return this.http.post<{ titolo: string, descrizione: string, chiavi: string, url: string, id: number }>(
       "/ricerca",
       postData,
       { headers: headers}
@@ -67,10 +66,7 @@ export class DataService {
 
   getSearch(id: number): Result | undefined {
     for (let s of this._results) {
-      console.log(s.id === id);
-      console.log(id);
       if (s.id === id){
-        console.log(s.id);
         return s;
       }
     }
@@ -83,13 +79,11 @@ export class DataService {
     return this.http.delete<void>('ricerca/' + id , {headers: headers});
   }
 
-  setResearch(id: number, research: {titolo: string, descrizione: string, chiavi: string, url: string}) {
+  setResearch(id: number, research: {titolo: string, descrizione: string, chiavi: string, url: string}): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.authService.userInfo?.access_token
     });
-    this.http.patch('ricerca/' + id, research, {headers: headers}).subscribe((resData) => {
-      console.log(resData);
-    })
+    return this.http.patch<any>('ricerca/' + id, research, {headers: headers});
   }
 
   getAllResearches(): Observable<Result[]> {
