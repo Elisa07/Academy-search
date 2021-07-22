@@ -51,6 +51,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     })
     if (sessionStorage.getItem('userPreferences')){
       this.selected = parseInt(<string>sessionStorage.getItem('userPreferences'));
+      this.pageSize = this.selected;
     }
 
     if (sessionStorage.getItem('searchKey')) {
