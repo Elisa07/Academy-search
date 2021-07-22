@@ -63,7 +63,10 @@ export class HeaderComponent implements OnInit {
   }
 
   refreshPage() {
-    this.dataService.resultsForPagination = [];
+    sessionStorage.removeItem('searchKey');
+    this.dataService.resetResearch.emit(true);
+    this.router.navigate(['search']);
+
   }
 
 

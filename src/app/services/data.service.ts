@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "./authentication.service";
-import {Observable, Subject} from "rxjs";
+import {Observable} from "rxjs";
+
 
 export interface Result {
   id: number,
@@ -20,7 +21,8 @@ export class DataService {
   public _resultsLength: any;
   public resultsForPagination: any = [];
   public token: any;
-  noResult: any = true;
+
+  resetResearch = new EventEmitter<boolean>();
 
 
   get results(): Result[]{
@@ -28,17 +30,6 @@ export class DataService {
   }
   set results(value: Result[]) {
     this._results = value;
-  }
-
-  get resultsLength(): any{
-    return this._resultsLength;
-  }
-  setResultsLength(value: any) {
-    this._resultsLength = value;
-  }
-
-  setResultsForPage(page:any) {
-    this.resultsForPagination = this._results.slice(page*10 - 10, page*10)
   }
 
   constructor(private http: HttpClient, private router:Router, private authService: AuthenticationService) {}
