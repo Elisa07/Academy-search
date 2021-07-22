@@ -5,9 +5,8 @@
       <div class="col-md-8 offset-md-2">
         <div class="input-group rounded">
           <form class="input-group">
-            <input class="form-control me-2 rounded" type="search" name="search" id="search" placeholder="Search" [(ngModel)]="searchText">
+            <input class="form-control me-2 rounded" type="search" name="search" id="search" value="lastSearch" placeholder="Search" [(ngModel)]="searchText" >
             <div>
-              <button class="btn btn-outline-danger me-2" type="button" (click)="deleteInput()"><fa-icon [icon]="close"></fa-icon></button>
               <button class="btn btn-outline-primary" (click)="searchInput()" type="submit" [disabled]="searchText.length === 0"><fa-icon [icon]="searchIcon"></fa-icon></button>
             </div>
           </form>
@@ -20,7 +19,14 @@
       <div *ngIf="isVisible" class="d-flex justify-content-center">
         <app-loading-spinner></app-loading-spinner>
       </div>
-      <ng-container class="list-group" *ngIf="!isVisible">
+      <div class="col-12" *ngIf="isClicked && !isVisible && dataService.noResult">
+        <div class="d-flex flex-sm-column align-items-center">
+          <span><fa-icon [icon]="noFound"></fa-icon>Nessun risultato trovato per: {{lastSearch}}</span> <br>
+          <img src="../../assets/images/sadness.jpg" alt="not found">
+          <span class="mt-3">Non essere triste! Possiamo trovarlo!</span>
+        </div>
+      </div>
+      <ng-container class="list-group" *ngIf="!isVisible && !dataService.noResult">
         <div *ngIf="dataService.resultsForPagination.length !== 0">
           <div *ngFor="let r of dataService.resultsForPagination;" class="border rounded-3 shadow-sm p-3 mb-3 bg-body row">
             <div [class]="authService.isLogged ? 'col-10' : 'col-12'">

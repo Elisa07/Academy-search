@@ -20,10 +20,10 @@ export class DataService {
   public _resultsLength: any;
   public resultsForPagination: any = [];
   public token: any;
+  noResult: any = true;
 
   get results(): Result[]{
     return this._results;
-
   }
   set results(value: Result[]) {
     this._results = value;
@@ -45,9 +45,13 @@ export class DataService {
   setResults(chiave: string) {
     return this.http.get<Result[]>("/ricerca?q=" + chiave).subscribe(
       data => {
+        this.noResult = true;
         this.results = data;
         this.setResultsLength(Object.keys(data).length);
-        this.setResultsForPage(1);
+        this.setResultsForPage(1);      
+        if(Object.keys(data).length != 0){
+          this.noResult = false;
+        }        
       },
       error => { console.log("Errore" + error.message)},
     );

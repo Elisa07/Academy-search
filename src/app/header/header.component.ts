@@ -5,7 +5,6 @@ import {faSearch, faUserCircle} from "@fortawesome/free-solid-svg-icons";
 import { Router} from "@angular/router";
 import { DataService } from '../services/data.service';
 
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
