@@ -18,7 +18,7 @@ export interface Result {
 export class DataService {
   public _results: Result[] = [];
   public _resultsLength: any;
-  public resultsForPagination: any;
+  public resultsForPagination: any = [];
   public token: any;
 
   get results(): Result[]{

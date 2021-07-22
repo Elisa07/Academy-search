@@ -3,6 +3,7 @@ import {AuthenticationService} from "../services/authentication.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {faSearch, faUserCircle} from "@fortawesome/free-solid-svg-icons";
 import { Router} from "@angular/router";
+import { DataService } from '../services/data.service';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class HeaderComponent implements OnInit {
   loginError: boolean = false;
   logginErrorMessage!: string;
 
-  constructor(private authService: AuthenticationService, private router: Router) { }
+  constructor(private authService: AuthenticationService, private router: Router, private dataService: DataService) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -60,4 +61,9 @@ export class HeaderComponent implements OnInit {
         this.isVisible = false;
       }, 700);
   }
+
+  refreshPage() {
+    this.dataService.resultsForPagination = [];
+  }
+
 }
