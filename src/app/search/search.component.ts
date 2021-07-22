@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {DataService, Result} from '../services/data.service';
 import {faEdit, faSearch, faTrash, faWindowClose} from "@fortawesome/free-solid-svg-icons";
 import {AuthenticationService} from "../services/authentication.service";
@@ -12,7 +12,7 @@ import {Subscription} from "rxjs";
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnDestroy {
   public searchText: string;
   searchIcon = faSearch;
   closeIcon = faWindowClose;
@@ -46,8 +46,9 @@ export class SearchComponent implements OnInit {
     this.resetSubs = this.dataService.resetResearch.subscribe(() => {
       this.searchText = '';
       this.researchResult = [];
+      this.noResult = true;
+      this.isClicked = false;
     })
-    console.log('OnINIT');
     if (sessionStorage.getItem('userPreferences')){
       this.selected = parseInt(<string>sessionStorage.getItem('userPreferences'));
     }
@@ -56,10 +57,10 @@ export class SearchComponent implements OnInit {
       this.searchText = <string>sessionStorage.getItem('searchKey');
       this.searchInput();
     }
-    else {
-      this.searchText = '';
-      this.researchResult = [];
-    }
+  }
+
+  ngOnDestroy() {
+    this.resetSubs.unsubscribe();
   }
 
   searchInput(pageNumber = 1) {
@@ -67,7 +68,6 @@ export class SearchComponent implements OnInit {
     sessionStorage.setItem('searchKey', this.searchText);
     this.dataService.fetchResult(this.searchText, this.pageSize, pageNumber).subscribe((respData) => {
       this.totalCount = respData.headers.get('x-total-count') ? parseInt(<string>respData.headers.get('x-total-count')) : 0;
-      console.log(Math.ceil(this.totalCount / this.pageSize));
       this.researchResult = (<Result[]>respData.body);
       this.page = pageNumber;
       this.dataService.results = this.researchResult;
@@ -75,9 +75,6 @@ export class SearchComponent implements OnInit {
       if(this.totalCount > 0) {
         this.noResult = false;
       }
-      console.log(this.noResult);
-
-      console.log(this.researchResult);
     });
     this.timeSpinner();
   }
@@ -103,7 +100,6 @@ export class SearchComponent implements OnInit {
   onChangePageSize() {
     this.pageSize = this.selected;
     this.searchInput(1);
-    console.log(this.selected);
     sessionStorage.setItem('userPreferences', this.selected.toString());
   }
 

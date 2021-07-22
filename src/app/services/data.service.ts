@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import {Injectable, EventEmitter, OnDestroy, OnInit} from '@angular/core';
 import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "./authentication.service";
@@ -24,7 +24,6 @@ export class DataService {
 
   resetResearch = new EventEmitter<boolean>();
 
-
   get results(): Result[]{
     return this._results;
   }
@@ -32,7 +31,9 @@ export class DataService {
     this._results = value;
   }
 
-  constructor(private http: HttpClient, private router:Router, private authService: AuthenticationService) {}
+  constructor(private http: HttpClient, private router:Router, private authService: AuthenticationService) {
+    sessionStorage.removeItem('searchKey');
+  }
 
   fetchResult(key: string, pageSize:number, pageNumber: number): Observable<HttpResponse<Result[]>> {
     return this.http.get<Result[]>('ricerca?q=' + key + '&_page=' + pageNumber + '&_limit=' + pageSize, {observe: 'response'});
