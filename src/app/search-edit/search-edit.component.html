@@ -1,11 +1,16 @@
 <div class="container">
-  <div class="row">
+  <div class="row mb-2">
     <div class="col">
+      <a routerLink="/search" class="d-flex align-items-center return"><span><fa-icon [icon]="returnIcon"></fa-icon></span><span>Ricerca</span></a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-lg-8 m-auto">
       <h2>Modifica la ricerca</h2>
       <p>Modifica i campi sottostanti per modificare la ricerca</p>
       <div class="col-12" *ngIf="isVisible">
         <div class="alert alert-success">
-          <span><fa-icon [icon]="check"></fa-icon>La ricerca è stata aggiornata con successo!</span>
+          <span><fa-icon [icon]="checkIcon"></fa-icon>La ricerca è stata aggiornata con successo!</span>
         </div>
       </div>
       <form [formGroup]="editForm" (ngSubmit)="onEditSearchItem()">
@@ -50,7 +55,7 @@
         </div>
 
         <div class="w-100 d-flex justify-content-end">
-          <button class="btn btn-outline-danger mr-2" type="button" [disabled]="!editForm.dirty" (click)="discardChanges()">Annulla</button>
+          <button class="btn btn-outline-danger me-2" type="button" [disabled]="!editForm.dirty" (click)="discardChanges()">Annulla</button>
           <button class="btn btn-outline-primary" [disabled]="editForm.invalid || !editForm.dirty" type="submit">Salva</button>
         </div>
       </form>

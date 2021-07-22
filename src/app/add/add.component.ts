@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../services/authentication.service";
-import {faCheck, faCheckSquare, faEdit, faTimesCircle, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faArrowLeft, faCheck, faCheckSquare, faEdit, faTimesCircle, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {faSquare} from "@fortawesome/free-regular-svg-icons";
 import {CookieService} from 'ngx-cookie-service';
 import {NgbNavConfig} from '@ng-bootstrap/ng-bootstrap';
-import {Router} from "@angular/router";
+import {Router, RoutesRecognized} from "@angular/router";
 
 import {DataService, Result} from '../services/data.service';
+import {filter, pairwise} from "rxjs/operators";
+import {PreviousRouteService} from "../services/previous-route.service";
 
 interface CheckBox {
   name: string, value: string, checked: boolean
@@ -27,6 +29,7 @@ export class AddComponent implements OnInit {
   editIcon = faEdit;
   checkSquareIcon = faCheckSquare;
   unCheckSquareIcon = faSquare;
+  returnIcon = faArrowLeft;
   isVisible = false;
   researches: Result[] = [];
   checkBox: CheckBox[] = []
@@ -37,10 +40,13 @@ export class AddComponent implements OnInit {
 
   lastAccess!: string;
 
+  previousRoute!: string;
+
   constructor(private authService: AuthenticationService,
               private cookieService: CookieService,
               private dataService: DataService,
-              private router: Router) {
+              private router: Router, private prevRouteService: PreviousRouteService) {
+    this.previousRoute = prevRouteService.getPreviousRoute();
   }
 
   ngOnInit(): void {
@@ -50,6 +56,12 @@ export class AddComponent implements OnInit {
       const lastAccessDate = new Date(this.authService.userInfo.refreshTokenExpireIn - 32400000);
       this.lastAccess = lastAccessDate.toLocaleString();
     }
+    this.router.events
+      .pipe(filter((evt: any) => evt instanceof RoutesRecognized), pairwise())
+      .subscribe((events: RoutesRecognized[]) => {
+        console.log('previous url', events[0].urlAfterRedirects);
+        console.log('current url', events[1].urlAfterRedirects);
+      });
   }
 
   private initForm() {

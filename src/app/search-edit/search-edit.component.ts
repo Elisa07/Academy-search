@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Result} from "../services/data.service";
-import {faCheck} from "@fortawesome/free-solid-svg-icons";
+import {faArrowLeft, faCheck} from "@fortawesome/free-solid-svg-icons";
 
 import {DataService} from "../services/data.service";
+import {PreviousRouteService} from "../services/previous-route.service";
 
 @Component({
   selector: 'app-search-edit',
@@ -16,8 +17,15 @@ export class SearchEditComponent implements OnInit {
   editForm!: FormGroup;
   id!:number;
   isVisible = false;
-  check = faCheck;
-  constructor(private dataService: DataService, private route: ActivatedRoute, private router: Router) { }
+  checkIcon = faCheck;
+  returnIcon = faArrowLeft;
+
+
+  constructor(private dataService: DataService,
+              private route: ActivatedRoute,
+              private router: Router) {
+
+  }
 
   ngOnInit(): void {
     this.id = +this.route.snapshot.params['id'];

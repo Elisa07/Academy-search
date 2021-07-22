@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../services/authentication.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {faSearch, faUserCircle} from "@fortawesome/free-solid-svg-icons";
-import { Router} from "@angular/router";
+import {faSearch} from "@fortawesome/free-solid-svg-icons";
+import { Router } from "@angular/router";
 import { DataService } from '../services/data.service';
 
 @Component({
@@ -14,14 +14,15 @@ export class HeaderComponent implements OnInit {
 
   isLogged = false;
   loginForm!: FormGroup;
-  userIcon = faUserCircle;
   searchIcon = faSearch;
   isVisible = false;
 
   loginError: boolean = false;
   logginErrorMessage!: string;
 
-  constructor(private authService: AuthenticationService, private router: Router, private dataService: DataService) { }
+  constructor(private authService: AuthenticationService, private router: Router, private dataService: DataService) {
+
+  }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -64,5 +65,7 @@ export class HeaderComponent implements OnInit {
   refreshPage() {
     this.dataService.resultsForPagination = [];
   }
+
+
 
 }

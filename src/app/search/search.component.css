@@ -8,3 +8,7 @@ img {
 button.btn fa-icon {
   width: 16px!important;
 }
+
+.editButton {
+  width: 55px;
+}

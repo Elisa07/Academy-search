@@ -9,7 +9,6 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import {SearchModule} from "./search/search.module";
 import {AddModule} from "./add/add.module";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { SearchEditComponent } from './search-edit/search-edit.component';
 import {SearchEditModule} from "./search-edit/search-edit.module";
 import { SharedModule } from './shared/shared.module';
 
