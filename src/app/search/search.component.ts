@@ -1,17 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-<<<<<<< HEAD
-import { DataService } from '../services/data.service';
-import {faEdit, faSearch, faTrash, faWindowClose, faTimesCircle} from "@fortawesome/free-solid-svg-icons";
-import {AuthenticationService} from "../services/authentication.service";
-import {Router} from "@angular/router";
-import { HostListener } from '@angular/core';
-=======
 import {DataService, Result} from '../services/data.service';
 import {faEdit, faSearch, faTrash, faWindowClose} from "@fortawesome/free-solid-svg-icons";
 import {AuthenticationService} from "../services/authentication.service";
 import {Router} from "@angular/router";
 import {toInteger} from "@ng-bootstrap/ng-bootstrap/util/util";
->>>>>>> 958f9fba5257059311455295b803f8f32b269432
 
 @Component({
   selector: 'app-search',
@@ -20,19 +12,15 @@ import {toInteger} from "@ng-bootstrap/ng-bootstrap/util/util";
 })
 export class SearchComponent implements OnInit {
   public searchText: string;
-  lastSearch: string = "";
   searchIcon = faSearch;
   closeIcon = faWindowClose;
   editIcon = faEdit;
   trashIcon = faTrash;
-  noFound = faTimesCircle;
   page = 1;
   pageSize = 10;
   isVisible = false;
-<<<<<<< HEAD
+  noResult = true;
   isClicked = false;
- 
-=======
 
   // Nuova fetch
   researchResult: Result[] = [];
@@ -46,31 +34,30 @@ export class SearchComponent implements OnInit {
   ];
   selected: number = 10;
 
->>>>>>> 958f9fba5257059311455295b803f8f32b269432
   constructor(public dataService: DataService, public authService: AuthenticationService, private router: Router) {
     this.searchText = "";
-    this.lastSearch = this.searchText;
   }
 
   ngOnInit() : void {  }
 
-<<<<<<< HEAD
-  searchInput() {
-    this.dataService.setResults(this.searchText);
-    this.lastSearch = this.searchText;
-=======
   searchInput(pageNumber = 1) {
+    this.isClicked = true;
+
     this.dataService.fetchResult(this.searchText, this.pageSize, pageNumber).subscribe((respData) => {
       this.totalCount = respData.headers.get('x-total-count') ? parseInt(<string>respData.headers.get('x-total-count')) : 0;
-      console.log(Math.ceil(this.totalCount / this.pageSize));
       this.researchResult = (<Result[]>respData.body);
       this.page = pageNumber;
       this.dataService.results = this.researchResult;
+      console.log(this.totalCount);
+      
+      if(this.totalCount > 0) {
+        this.noResult = false;
+      }
+      console.log(this.noResult);
+      
       console.log(this.researchResult);
     });
->>>>>>> 958f9fba5257059311455295b803f8f32b269432
     this.timeSpinner();
-    this.isClicked = true;
   }
 
   deleteInput() {
@@ -91,18 +78,10 @@ export class SearchComponent implements OnInit {
     }, 700);
   }
 
-<<<<<<< HEAD
-  @HostListener('window:popstate', ['$event'])
-  onPopState(event: any) {
-    console.log(event);
-  }
-
-=======
   onChangePageSize() {
     this.pageSize = this.selected;
-    this.searchInput(1);
-    console.log(this.selected);
+    this.searchInput();
   }
->>>>>>> 958f9fba5257059311455295b803f8f32b269432
 
 }
+

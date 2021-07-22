@@ -99,7 +99,6 @@ export class AddComponent implements OnInit {
     this.authService.logout();
   }
 
-
   onGetResearches() {
     this.dataService.getAllResearches().subscribe((researches) => {
       this.researches = researches;
@@ -117,8 +116,7 @@ export class AddComponent implements OnInit {
         c.checked = true;
         this.selectedNumber = this.researches.length;
       }
-    }
-    else {
+    } else {
       for (const c of this.checkBox) {
         c.checked = false;
         this.selectedNumber = 0;
