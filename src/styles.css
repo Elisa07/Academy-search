@@ -78,3 +78,26 @@ a:hover {
 a.active {
   font-weight: bold!important;
 }
+
+.form-group {
+  margin: 10px 0;
+}
+
+.page-item.active .page-link {
+  background-color: #00606260!important;
+  border: 1px solid var(--lightblue) !important;
+}
+
+.page-item .page-link:hover {
+  background-color: #00606260;
+  color: var(--lightblue) !important;
+}
+
+.page-item .page-link, .form-select  {
+  border-color: #00606260!important;
+  color: var(--lightblue);
+}
+
+.return {
+  color: var(--black) !important;
+}

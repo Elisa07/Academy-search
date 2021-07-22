@@ -7,7 +7,7 @@
           <form class="input-group">
             <input class="form-control me-2 rounded" type="search" name="search" id="search" placeholder="Search" [(ngModel)]="searchText">
             <div>
-              <button class="btn btn-outline-danger me-2" type="button" (click)="deleteInput()"><fa-icon [icon]="close"></fa-icon></button>
+              <button class="btn btn-outline-danger me-2" type="button" (click)="deleteInput()"><fa-icon [icon]="closeIcon"></fa-icon></button>
               <button class="btn btn-outline-primary" (click)="searchInput()" type="submit" [disabled]="searchText.length === 0"><fa-icon [icon]="searchIcon"></fa-icon></button>
             </div>
           </form>
@@ -16,31 +16,41 @@
     </div>
   </div>
   <div class="row">
-    <div class="col">
+    <div class="col-12 col-lg-8 m-auto">
       <div *ngIf="isVisible" class="d-flex justify-content-center">
         <app-loading-spinner></app-loading-spinner>
       </div>
       <ng-container class="list-group" *ngIf="!isVisible">
-        <div *ngIf="dataService.resultsForPagination.length !== 0">
-          <div *ngFor="let r of dataService.resultsForPagination;" class="border rounded-3 shadow-sm p-3 mb-3 bg-body row">
+        <div *ngIf="researchResult.length !== 0">
+          <div *ngFor="let r of researchResult;" class="border rounded-3 shadow-sm p-3 mb-3 bg-body row">
             <div [class]="authService.isLogged ? 'col-10' : 'col-12'">
               <h5><strong>{{r.titolo}}</strong></h5>
               <p>{{r.descrizione}}<br>
                 <a href="{{r.url}}" target="_blank">{{r.url}}</a></p>
             </div>
             <div *ngIf="authService.isLogged" class="col-2 d-flex flex-column justify-content-center align-items-end">
-              <button class="btn btn-outline-secondary mt-2" routerLink="{{r.id}}"><fa-icon [icon]="editIcon"></fa-icon></button>
-              <button class="btn btn-outline-danger ms-3 mt-2" (click)="deleteResearch(r.id)"><fa-icon [icon]="trashIcon"></fa-icon></button>
+              <button class="btn btn-outline-secondary mt-2 editButton" routerLink="{{r.id}}"><fa-icon [icon]="editIcon"></fa-icon></button>
+              <button class="btn btn-outline-danger ms-3 mt-2 editButton" (click)="deleteResearch(r.id)"><fa-icon [icon]="trashIcon"></fa-icon></button>
             </div>
           </div>
+          <!-- [collectionSize]="dataService.resultsLength" -->
           <ngb-pagination class="d-flex justify-content-center"
           id="pagination"
-          [collectionSize]="dataService.resultsLength"
+          [collectionSize]="totalCount"
           [pageSize]="pageSize"
           [(page)]="page"
-          (pageChange)="dataService.setResultsForPage(page)">
+          (pageChange)="searchInput(page)">
           </ngb-pagination>
+          <div class="d-flex justify-content-center w-25 m-auto">
+            <div>
+              <select (change)="onChangePageSize()" class="form-select"
+                      [(ngModel)]="selected">
+                <option [class]="'notSel ' + (selected === option.id ? 'sel' : '')" [value]="option.value" *ngFor="let option of selectOption">{{option.value}}</option>
+              </select>
+            </div>
+          </div>
         </div>
+
       </ng-container>
     </div>
   </div>

@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DataService } from '../services/data.service';
+import {DataService, Result} from '../services/data.service';
 import {faEdit, faSearch, faTrash, faWindowClose} from "@fortawesome/free-solid-svg-icons";
 import {AuthenticationService} from "../services/authentication.service";
 import {Router} from "@angular/router";
+import {toInteger} from "@ng-bootstrap/ng-bootstrap/util/util";
 
 @Component({
   selector: 'app-search',
@@ -12,23 +13,40 @@ import {Router} from "@angular/router";
 export class SearchComponent implements OnInit {
   public searchText: string;
   searchIcon = faSearch;
-  close = faWindowClose;
+  closeIcon = faWindowClose;
   editIcon = faEdit;
   trashIcon = faTrash;
   page = 1;
   pageSize = 10;
   isVisible = false;
 
+  // Nuova fetch
+  researchResult: Result[] = [];
+  totalCount: number = 0;
+
+  selectOption: {id: number, value: number, selected: boolean}[] = [
+    { id: 1, value: 1, selected: false},
+    { id: 5, value: 5, selected: false },
+    { id: 10, value: 10, selected: true },
+    { id: 20, value: 20, selected: false},
+  ];
+  selected: number = 10;
+
   constructor(public dataService: DataService, public authService: AuthenticationService, private router: Router) {
     this.searchText = "";
   }
 
-  ngOnInit() : void {
-  }
+  ngOnInit() : void {  }
 
-  searchInput() {
-    this.dataService.setResults(this.searchText);
-    console.log('Search input');
+  searchInput(pageNumber = 1) {
+    this.dataService.fetchResult(this.searchText, this.pageSize, pageNumber).subscribe((respData) => {
+      this.totalCount = respData.headers.get('x-total-count') ? parseInt(<string>respData.headers.get('x-total-count')) : 0;
+      console.log(Math.ceil(this.totalCount / this.pageSize));
+      this.researchResult = (<Result[]>respData.body);
+      this.page = pageNumber;
+      this.dataService.results = this.researchResult;
+      console.log(this.researchResult);
+    });
     this.timeSpinner();
   }
 
@@ -48,6 +66,12 @@ export class SearchComponent implements OnInit {
     setTimeout(() => {
       this.isVisible = false;
     }, 700);
-}
+  }
+
+  onChangePageSize() {
+    this.pageSize = this.selected;
+    this.searchInput(1);
+    console.log(this.selected);
+  }
 
 }

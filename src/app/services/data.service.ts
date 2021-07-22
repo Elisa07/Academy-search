@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "./authentication.service";
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 
 export interface Result {
   id: number,
@@ -20,6 +20,7 @@ export class DataService {
   public _resultsLength: any;
   public resultsForPagination: any = [];
   public token: any;
+
 
   get results(): Result[]{
     return this._results;
@@ -42,16 +43,10 @@ export class DataService {
 
   constructor(private http: HttpClient, private router:Router, private authService: AuthenticationService) {}
 
-  setResults(chiave: string) {
-    return this.http.get<Result[]>("/ricerca?q=" + chiave).subscribe(
-      data => {
-        this.results = data;
-        this.setResultsLength(Object.keys(data).length);
-        this.setResultsForPage(1);
-      },
-      error => { console.log("Errore" + error.message)},
-    );
+  fetchResult(key: string, pageSize:number, pageNumber: number): Observable<HttpResponse<Result[]>> {
+    return this.http.get<Result[]>('ricerca?q=' + key + '&_page=' + pageNumber + '&_limit=' + pageSize, {observe: 'response'});
   }
+
 
   addPost(postData: { titolo: string, descrizione: string, chiavi: string, url: string }): Observable<any> {
     const headers = new HttpHeaders ({

@@ -1,171 +1,53 @@
 {
   "ricerca": [
     {
+      "id": 1,
+      "titolo": "Home Aubay. - Aubay |",
+      "descrizione": "Activity areas. Aubay lavora solo con i principali attori di mercato ed è particolarmente presente in quello bancario e assicurativo. Aubay lavora ...",
+      "chiavi": "consulenza,it",
+      "url": "https://www.aubay.it"
+    },
+    {
+      "id": 2,
+      "titolo": "Angular",
+      "descrizione": "Angular is a platform for building mobile and desktop web applications. Join the community of millions of developers who build compelling user interfaces with ...",
+      "chiavi": "javascript,typescript",
+      "url": "https://angular.io"
+    },
+    {
       "id": 3,
       "titolo": "TypeScript: Typed JavaScript at Any Scale.",
       "descrizione": "JavaScript and More ... TypeScript is an open-source language which builds on JavaScript, one of the world's most used tools, by adding static type definitions.",
       "chiavi": "language,developing",
       "url": "https://www.typescriptlang.org"
-<<<<<<< HEAD
-<<<<<<< HEAD
-    },
-    {
-      "titolo": "prova",
-      "descrizione": "prova",
-      "chiavi": "prova",
-      "url": "www.prova.com",
-      "id": 7
-    },
-    {
-      "titolo": "prova",
-      "descrizione": "prova",
-      "chiavi": "prova",
-      "url": "www.prova.com",
-      "id": 8
-    },
-    {
-      "titolo": "prova",
-      "descrizione": "Prova",
-      "chiavi": "prova",
-      "url": "www.prova.com",
-      "id": 9
-    },
-    {
-      "titolo": "prova",
-      "descrizione": "prova",
-      "chiavi": "prova",
-      "url": "www.prova",
-      "id": 12
-    },
-    {
-      "titolo": "prova",
-      "descrizione": "prova",
-      "chiavi": "prova",
-      "url": "www.prova",
-      "id": 13
-    },
-    {
-      "titolo": "prova",
-      "descrizione": "prova",
-      "chiavi": "prova",
-      "url": "www.prova.com",
-      "id": 14
-    },
-    {
-      "titolo": "prova",
-      "descrizione": "prova",
-      "chiavi": "prova",
-      "url": "www.prova.com",
-      "id": 15
-    },
-    {
-      "titolo": "test",
-      "descrizione": "test",
-      "chiavi": "test",
-      "url": "www.test.com",
-      "id": 16
-    },
-    {
-      "titolo": "ciao",
-      "descrizione": "ciao",
-      "chiavi": "ciao",
-      "url": "www.ciao.com",
-      "id": 17
-    },
-    {
-      "titolo": "prova",
-      "descrizione": "prova",
-      "chiavi": "prova",
-      "url": "www.prova.com",
-      "id": 18
-    },
-    {
-      "titolo": "prova",
-      "descrizione": "prova",
-      "chiavi": "prova",
-      "url": "www.prova.com",
-      "id": 19
-    },
-    {
-      "titolo": "ciao",
-      "descrizione": "ciao",
-      "chiavi": "ciao",
-      "url": "www.ciao.com",
-      "id": 20
-    },
-    {
-      "titolo": "ciao",
-      "descrizione": "gkukg",
-      "chiavi": "kugb",
-      "url": "www.prova.com",
-      "id": 21
-    },
-    {
-      "titolo": "rtndg",
-      "descrizione": "dfgbfd",
-      "chiavi": "dbdbg",
-      "url": "www.prova.com",
-      "id": 22
-    },
-    {
-      "titolo": "ciao",
-      "descrizione": "aef",
-      "chiavi": "sdvf",
-      "url": "www.prova.com",
-      "id": 23
-    },
-    {
-      "titolo": "ciao",
-      "descrizione": "sfdv",
-      "chiavi": "sfvb",
-      "url": "www.prova.com",
-      "id": 24
-    },
-    {
-      "titolo": "ciao",
-      "descrizione": "aewvfs",
-      "chiavi": "sdvsrg",
-      "url": "www.prova.com",
-      "id": 25
-    },
-    {
-      "titolo": "ciao",
-      "descrizione": "gggg",
-      "chiavi": "ggggg",
-      "url": "www.prova.com",
-      "id": 26
-    },
-    {
-      "titolo": "ciao",
-      "descrizione": "prova",
-      "chiavi": "prova",
-      "url": "www.prova.com",
-      "id": 27
-    },
-    {
-      "titolo": "ciao",
-      "descrizione": "ciao",
-      "chiavi": "ciao",
-      "url": "www.prova.com",
-      "id": 28
-    },
-    {
-      "titolo": "test44",
-      "descrizione": "test",
-      "chiavi": "prova",
-      "url": "www.prova.com",
-      "id": 29
-=======
->>>>>>> b522b2f914fa878fa040a0a58469c0f820c85b8f
-=======
     },
     {
       "titolo": "Prova 4837",
-      "descrizione": "fjdkhsfdk",
+      "descrizione": "fjdkhsfdkajkdfhajskfhkdfsjkdfh\n",
       "chiavi": "ajsfha",
       "url": "www.google.com",
       "id": 4
->>>>>>> 11db259798b0046664e17172a5386a57f794ed7e
+    },
+    {
+      "titolo": "Prova",
+      "descrizione": "Ciao",
+      "chiavi": "ksdjas",
+      "url": "sjdfshdkj.com",
+      "id": 6
+    },
+    {
+      "titolo": "Proav",
+      "descrizione": "sdjgsj",
+      "chiavi": "dfjdsjkfs",
+      "url": "www.google.com",
+      "id": 7
+    },
+    {
+      "titolo": "Prova",
+      "descrizione": "jksdhj",
+      "chiavi": "kjdsghs",
+      "url": "khdks.com",
+      "id": 9
     }
   ]
 }
