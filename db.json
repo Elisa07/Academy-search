@@ -6,6 +6,7 @@
       "descrizione": "JavaScript and More ... TypeScript is an open-source language which builds on JavaScript, one of the world's most used tools, by adding static type definitions.",
       "chiavi": "language,developing",
       "url": "https://www.typescriptlang.org"
+<<<<<<< HEAD
     },
     {
       "titolo": "prova",
@@ -153,6 +154,8 @@
       "chiavi": "prova",
       "url": "www.prova.com",
       "id": 29
+=======
+>>>>>>> b522b2f914fa878fa040a0a58469c0f820c85b8f
     }
   ]
 }
