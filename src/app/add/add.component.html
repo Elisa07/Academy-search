@@ -1,15 +1,24 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <ul ngbNav #nav="ngbNav" class="nav-tabs mb-4">
+      <ul ngbNav #nav="ngbNav" class="nav-tabs mb-4 justify-content-center">
         <!-- Admin info -->
         <li ngbNavItem>
           <a ngbNavLink>Informazioni utente</a>
           <ng-template ngbNavContent>
-            <div class="row">
-              <img class="col-3" src="./assets/images/1012770.png" alt="Utente">
-              <div class="col">
-                <button class="col btn btn-outline-danger" (click)="logout()">Logout</button>
+            <div class="row justify-content-center">
+              <div class="col-3 col-lg-2 d-flex align-content-end ma-auto">
+                <img class="w-100" src="./assets/images/1012770.png" alt="Utente">
+              </div>
+              <div class="col-5 m-auto">
+                <h4>Informazioni utente</h4>
+                <p>
+                  <b>Username</b>: user<br>
+                  <b>Numero ricerche salvate</b>: {{this.researches.length}}<br>
+                  <b>Ultimo accesso</b>: {{ lastAccess }}
+                </p>
+                <button class="btn btn-outline-secondary me-2" disabled>Cambia password</button>
+                <button class="btn btn-outline-danger" (click)="logout()">Logout</button>
               </div>
             </div>
           </ng-template>
@@ -27,7 +36,7 @@
                 >
                   <fa-icon [icon]="!allSelected ? checkSquareIcon : unCheckSquareIcon"></fa-icon>{{allSelected ? 'Deseleziona tutti' : 'Seleziona tutti'}}
                 </button>
-                <button *ngIf="editMode"  class="btn btn-outline-danger" (click)="onDelete()"><fa-icon [icon]="trashIcon"></fa-icon>Cancella selezione</button>
+                <button *ngIf="editMode"  class="btn btn-outline-danger" (click)="onDelete()" [disabled]="selectedNumber === 0"><fa-icon [icon]="trashIcon"></fa-icon>Cancella selezione</button>
                 <button *ngIf="editMode" class="btn btn-outline-danger float-end" (click)="closeEditMode()">Termina modifica</button>
               </div>
               <ul class="p-2">

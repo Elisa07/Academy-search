@@ -5,4 +5,6 @@ img {
   width: 200px;
 }
 
-
+button.btn fa-icon {
+  width: 16px!important;
+}

@@ -3,6 +3,11 @@
     <div class="col">
       <h2>Modifica la ricerca</h2>
       <p>Modifica i campi sottostanti per modificare la ricerca</p>
+      <div class="col-12" *ngIf="isVisible">
+        <div class="alert alert-success">
+          <span><fa-icon [icon]="check"></fa-icon>La ricerca è stata aggiornata con successo!</span>
+        </div>
+      </div>
       <form [formGroup]="editForm" (ngSubmit)="onEditSearchItem()">
         <div class="form-group">
           <label for="title">Titolo</label>
@@ -45,7 +50,8 @@
         </div>
 
         <div class="w-100 d-flex justify-content-end">
-          <button class="btn btn-outline-primary mb-5" [disabled]="editForm.invalid && !editForm.valueChanges" type="submit">Salva</button>
+          <button class="btn btn-outline-danger mr-2" type="button" [disabled]="!editForm.dirty" (click)="discardChanges()">Annulla</button>
+          <button class="btn btn-outline-primary" [disabled]="editForm.invalid || !editForm.dirty" type="submit">Salva</button>
         </div>
       </form>
     </div>

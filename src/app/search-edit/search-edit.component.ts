@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
-import {DataService} from "../services/data.service";
 import {Result} from "../services/data.service";
+import {faCheck} from "@fortawesome/free-solid-svg-icons";
+
+import {DataService} from "../services/data.service";
 
 @Component({
   selector: 'app-search-edit',
@@ -13,6 +15,8 @@ export class SearchEditComponent implements OnInit {
 
   editForm!: FormGroup;
   id!:number;
+  isVisible = false;
+  check = faCheck;
   constructor(private dataService: DataService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
@@ -33,10 +37,8 @@ export class SearchEditComponent implements OnInit {
   }
 
   private initForm(id: number) {
-    console.log('Init form');
     const search: Result | undefined = this.dataService.getSearch(+id);
     if (search) {
-      console.log('Search');
       this.editForm = new FormGroup({
         'title': new FormControl(search.titolo, Validators.required),
         'description': new FormControl(search.descrizione, Validators.required),
@@ -57,7 +59,26 @@ export class SearchEditComponent implements OnInit {
       "chiavi": this.editForm.value.keys,
       "url": this.editForm.value.url
     }
-    this.dataService.setResearch(this.id, postData);
+    this.dataService.setResearch(this.id, postData).subscribe((resData) => {
+      this.success();
+      this.editForm = new FormGroup({
+        'title': new FormControl(resData.titolo, Validators.required),
+        'description': new FormControl(resData.descrizione, Validators.required),
+        'keys': new FormControl(resData.chiavi, Validators.required),
+        'url': new FormControl(resData.url, [Validators.required, Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')])
+      });
+    });
+  }
+
+  discardChanges() {
+    this.initForm(this.id);
+  }
+
+  success(): void {
+    this.isVisible = true;
+    setTimeout(() => {
+      this.isVisible = false;
+    }, 5000);
   }
 
 }

@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../services/authentication.service";
 import {faCheck, faCheckSquare, faEdit, faTimesCircle, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {faSquare} from "@fortawesome/free-regular-svg-icons";
-import { CookieService } from 'ngx-cookie-service';
-import {DataService, Result} from '../services/data.service';
+import {CookieService} from 'ngx-cookie-service';
 import {NgbNavConfig} from '@ng-bootstrap/ng-bootstrap';
 import {Router} from "@angular/router";
+
+import {DataService, Result} from '../services/data.service';
 
 interface CheckBox {
   name: string, value: string, checked: boolean
@@ -21,7 +22,6 @@ interface CheckBox {
 export class AddComponent implements OnInit {
 
   addForm!: FormGroup;
-  deleteIcon = faTimesCircle;
   trashIcon = faTrash;
   check = faCheck;
   editIcon = faEdit;
@@ -35,6 +35,7 @@ export class AddComponent implements OnInit {
 
   selectedNumber = 0;
 
+  lastAccess!: string;
 
   constructor(private authService: AuthenticationService,
               private cookieService: CookieService,
@@ -45,6 +46,10 @@ export class AddComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.onGetResearches();
+    if (this.authService.userInfo?.refreshTokenExpireIn) {
+      const lastAccessDate = new Date(this.authService.userInfo.refreshTokenExpireIn - 32400000);
+      this.lastAccess = lastAccessDate.toLocaleString();
+    }
   }
 
   private initForm() {
@@ -63,11 +68,11 @@ export class AddComponent implements OnInit {
       "chiavi": this.addForm.value.keys,
       "url": this.addForm.value.url
     }
-    this.dataService.addPost(postData).subscribe(() => {
+    this.dataService.addPost(postData).subscribe((resData: { titolo: string, descrizione: string, chiavi: string, url: string, id: number }) => {
       this.onGetResearches();
+      this.initForm();
+      this.success();
     });
-    this.initForm();
-    this.success();
 
   }
 
@@ -75,7 +80,7 @@ export class AddComponent implements OnInit {
     this.isVisible = true;
     setTimeout(() => {
       this.isVisible = false;
-    }, 10000);
+    }, 5000);
   }
 
   logout() {
