@@ -11,6 +11,7 @@ import {AddModule} from "./add/add.module";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {SearchEditModule} from "./search-edit/search-edit.module";
 import { SharedModule } from './shared/shared.module';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { SharedModule } from './shared/shared.module';
     SearchEditModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
