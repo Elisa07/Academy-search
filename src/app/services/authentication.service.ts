@@ -23,7 +23,7 @@ export class AuthenticationService {
   userChanges: Subject<void> = new Subject<void>();
   private _tokenTimer: any;
   private _tokenRefreshTimer: any;
-
+  private endpoint = 'http://localhost:3000/';
 
   constructor(private http: HttpClient,
               private router: Router,
@@ -48,7 +48,7 @@ export class AuthenticationService {
 
   login(username: string, password: string): Observable<LoginInfo> {
     //Se non è loggato
-    return this.http.post<LoginInfo>('/auth/login', {'user': username, 'password': password})
+    return this.http.post<LoginInfo>(this.endpoint + 'auth/login', {'user': username, 'password': password})
       .pipe(tap((respData) => {
         this.userInfo = respData;
         this.isLogged = true;
@@ -77,7 +77,7 @@ export class AuthenticationService {
     const headers = new HttpHeaders({
       'Authentication': 'Bearer ' + refreshToken
     });
-    this.http.post<{access_token: string, tokenExpireIn: number}>('/auth/refreshToken', {refreshToken: refreshToken}, {headers: headers})
+    this.http.post<{access_token: string, tokenExpireIn: number}>(this.endpoint + 'auth/refreshToken', {refreshToken: refreshToken}, {headers: headers})
       .subscribe((newToken) => {
         if (this.userInfo) {
           this.userInfo.access_token = newToken.access_token;

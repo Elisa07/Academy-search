@@ -21,6 +21,7 @@ export class DataService {
   public _resultsLength: any;
   public resultsForPagination: any = [];
   public token: any;
+  private endpoint = 'http://localhost:3000/';
 
   resetResearch = new EventEmitter<boolean>();
 
@@ -36,7 +37,7 @@ export class DataService {
   }
 
   fetchResult(key: string, pageSize:number, pageNumber: number): Observable<HttpResponse<Result[]>> {
-    return this.http.get<Result[]>('ricerca?q=' + key + '&_page=' + pageNumber + '&_limit=' + pageSize, {observe: 'response'});
+    return this.http.get<Result[]>(this.endpoint + 'ricerca?q=' + key + '&_page=' + pageNumber + '&_limit=' + pageSize, {observe: 'response'});
   }
 
 
@@ -45,7 +46,7 @@ export class DataService {
       'Authorization': 'Bearer ' + this.authService.userInfo?.access_token
     })
     return this.http.post<{ titolo: string, descrizione: string, chiavi: string, url: string, id: number }>(
-      "/ricerca",
+      this.endpoint + "/ricerca",
       postData,
       { headers: headers}
     );
@@ -63,18 +64,18 @@ export class DataService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.authService.userInfo?.access_token
     });
-    return this.http.delete<void>('ricerca/' + id , {headers: headers});
+    return this.http.delete<void>(this.endpoint + 'ricerca/' + id , {headers: headers});
   }
 
   setResearch(id: number, research: {titolo: string, descrizione: string, chiavi: string, url: string}): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.authService.userInfo?.access_token
     });
-    return this.http.patch<any>('ricerca/' + id, research, {headers: headers});
+    return this.http.patch<any>(this.endpoint + 'ricerca/' + id, research, {headers: headers});
   }
 
   getAllResearches(): Observable<Result[]> {
-    return this.http.get<Result[]>('ricerca');
+    return this.http.get<Result[]>(this.endpoint + 'ricerca');
   }
 
   removeResearches(ids: number[]): Observable<void> {
@@ -87,6 +88,6 @@ export class DataService {
       }
     }
 
-    return this.http.delete<void>('http://localhost:3000/eliminaRisultati?' + idUrl);
+    return this.http.delete<void>(this.endpoint + 'eliminaRisultati?' + idUrl);
   }
 }
